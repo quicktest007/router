@@ -299,9 +299,9 @@ a {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 52% 48%;
   gap: 3rem;
-  align-items: stretch;
+  align-items: center;
 }
 
 @media (max-width: 768px) {
@@ -472,7 +472,7 @@ a {
 /* ----- Left column: product gallery (vertical thumbs + main image) ----- */
 .card__media {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: flex-start;
   min-width: 0;
 }
@@ -481,7 +481,7 @@ a {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 1.5rem;
+  gap: 1rem;
   width: 100%;
   max-width: 100%;
   margin: 0;
@@ -495,6 +495,7 @@ a {
   align-items: center;
   gap: 0.75rem;
   flex-shrink: 0;
+  width: 90px;
 }
 
 .gallery__thumbnails {
@@ -504,8 +505,8 @@ a {
 }
 
 .gallery__thumb {
-  width: 40px;
-  height: 40px;
+  width: 72px;
+  height: 72px;
   padding: 0;
   border: 2px solid rgba(0, 46, 112, 0.25);
   border-radius: 10px;
@@ -579,6 +580,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.75rem;
   flex: 1;
   min-width: 0;
@@ -587,13 +589,13 @@ a {
 
 .gallery__main-wrap {
   position: relative;
-  width: 50%;
-  max-width: 50%;
-  min-height: 180px;
+  width: 100%;
+  max-width: 600px;
+  max-height: 560px;
+  min-height: 320px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 auto;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 46, 112, 0.1);
@@ -613,11 +615,18 @@ a {
   z-index: 1;
   width: 100%;
   max-width: 100%;
+  max-height: 560px;
   height: auto;
   display: block;
   object-fit: contain;
+  object-position: center;
   filter: drop-shadow(0 8px 20px rgba(0, 46, 112, 0.12));
   border-radius: 20px;
+  transition: opacity 0.28s ease-out;
+}
+
+.gallery__main-wrap .gallery__main.is-fading {
+  opacity: 0;
 }
 
 .gallery__caption {
@@ -630,22 +639,33 @@ a {
 }
 
 @media (max-width: 768px) {
+  .card__inner {
+    align-items: stretch;
+  }
   .gallery {
     flex-direction: column;
     max-width: 100%;
+    align-items: center;
   }
-  .gallery__main-wrap {
-    width: 50%;
-    max-width: 280px;
-    min-height: 160px;
+  .gallery__thumb-col {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
   }
   .gallery__thumbnails {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 0.5rem;
   }
-  .gallery__thumb-col {
+  .gallery__main-wrap {
     width: 100%;
+    max-width: 100%;
+    min-height: 280px;
+    max-height: 420px;
+  }
+  .gallery__main-wrap .gallery__main {
+    max-height: 420px;
   }
   .gallery__caption {
     position: static;

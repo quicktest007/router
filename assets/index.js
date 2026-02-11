@@ -1,26 +1,27 @@
 /**
- * Covenant Eyes Router – Index: gallery, pack selector, home guide, add to cart
+ * Covenant Eyes Router – Index: gallery (auto-advance, fade, keyboard), pack selector, add to cart
  */
 
 (function () {
   "use strict";
 
-  var GALLERY_SRCS = [
-    "./assets/CErouter1pack.png",
-    "./assets/routerathome.png",
-    "./assets/1packcoverage.png",
-    "./assets/CErouter2pack.png",
-    "./assets/2packcoverage.png"
+  var GALLERY_IMAGES = [
+    { src: "./assets/CErouter1pack.png", alt: "Covenant Eyes Router — 1 Pack" },
+    { src: "./assets/routerathome.png", alt: "Covenant Eyes Router at home" },
+    { src: "./assets/1packcoverage.png", alt: "1-Pack coverage — up to 3,000 sqft" },
+    { src: "./assets/CErouter2pack.png", alt: "Covenant Eyes Router — 2 Pack" },
+    { src: "./assets/2packcoverage.png", alt: "2-Pack coverage — up to 5,000 sqft" }
   ];
-  var GALLERY_ALTS = [
-    "Covenant Eyes Router — 1 Pack",
-    "Covenant Eyes Router at home",
-    "1-Pack coverage — up to 3,000 sqft",
-    "Covenant Eyes Router — 2 Pack",
-    "2-Pack coverage — up to 5,000 sqft"
-  ];
-  var CURRENT_INDEX_KEY = "gallery_index";
+
+  var AUTO_ADVANCE_MS = 3000;
+  var PAUSE_AFTER_INTERACTION_MS = 8000;
+  var FADE_DURATION_MS = 280;
+
   var SAVINGS_2PACK = 99;
+
+  var currentIndex = 0;
+  var autoAdvanceTimerId = null;
+  var pauseTimeoutId = null;
 
   function getPackSelection() {
     var btn = document.querySelector(".pack-selector__btn.is-selected");
@@ -55,15 +56,6 @@
     }
   }
 
-  function updateProductImage(pkg) {
-    var img = document.getElementById("product-image");
-    if (!img) return;
-    var src = pkg === "2pack" ? "./assets/CErouter2pack.png" : "./assets/CErouter1pack.png";
-    var alt = pkg === "2pack" ? "Covenant Eyes Router — 2 Pack" : "Covenant Eyes Router — 1 Pack";
-    img.setAttribute("src", src);
-    img.setAttribute("alt", alt);
-  }
-
   function getQty() {
     var input = document.getElementById("qty-input");
     if (!input) return 1;
@@ -79,59 +71,133 @@
     var s = getPackSelection();
     updatePrice(s.price);
     updateSavings(s.package);
-    /* Main image is driven only by the carousel so display always matches selected thumbnail. */
     try {
       localStorage.setItem("selected_package", s.package);
       localStorage.setItem("selected_price", s.price);
     } catch (e) {}
   }
 
-  function initGallery() {
+  function preloadNextImage() {
+    var nextIdx = (currentIndex + 1) % GALLERY_IMAGES.length;
+    var item = GALLERY_IMAGES[nextIdx];
+    if (!item) return;
+    var img = new Image();
+    img.src = item.src;
+  }
+
+  function stopAutoAdvance() {
+    if (autoAdvanceTimerId) {
+      clearInterval(autoAdvanceTimerId);
+      autoAdvanceTimerId = null;
+    }
+  }
+
+  function startAutoAdvance() {
+    stopAutoAdvance();
+    autoAdvanceTimerId = setInterval(function () {
+      nextImage(false);
+    }, AUTO_ADVANCE_MS);
+  }
+
+  function pauseThenResume() {
+    if (pauseTimeoutId) clearTimeout(pauseTimeoutId);
+    stopAutoAdvance();
+    pauseTimeoutId = setTimeout(function () {
+      pauseTimeoutId = null;
+      startAutoAdvance();
+    }, PAUSE_AFTER_INTERACTION_MS);
+  }
+
+  function setImage(index, opts) {
+    opts = opts || {};
+    var fromUser = opts.fromUser === true;
+    var skipFade = opts.skipFade === true;
+
+    var len = GALLERY_IMAGES.length;
+    currentIndex = (index + len) % len;
+
+    var main = document.getElementById("product-image");
     var thumbs = document.querySelectorAll(".gallery__thumb");
     var counter = document.getElementById("gallery-counter");
-    var prevBtn = document.querySelector(".gallery__arrow--prev");
-    var nextBtn = document.querySelector(".gallery__arrow--next");
-    var current = 0;
 
-    function setCurrent(i) {
-      current = (i + GALLERY_SRCS.length) % GALLERY_SRCS.length;
-      var main = document.getElementById("product-image");
+    var item = GALLERY_IMAGES[currentIndex];
+    if (!item) return;
+
+    function applyImage() {
       if (main) {
-        main.setAttribute("src", GALLERY_SRCS[current]);
-        main.setAttribute("alt", GALLERY_ALTS[current]);
+        main.setAttribute("src", item.src);
+        main.setAttribute("alt", item.alt);
+        main.classList.remove("is-fading");
       }
       thumbs.forEach(function (t, idx) {
-        t.classList.toggle("is-active", idx === current);
-        t.setAttribute("aria-selected", idx === current ? "true" : "false");
+        var isActive = idx === currentIndex;
+        t.classList.toggle("is-active", isActive);
+        t.setAttribute("aria-selected", isActive ? "true" : "false");
       });
-      if (counter) counter.textContent = (current + 1) + " / " + GALLERY_SRCS.length;
-      if (typeof track === "function") track("click_thumbnail", { index: current });
+      if (counter) counter.textContent = (currentIndex + 1) + " / " + len;
+      preloadNextImage();
     }
 
-    function goNext() {
-      setCurrent(current + 1);
+    if (skipFade || !main) {
+      applyImage();
+      return;
     }
+
+    main.classList.add("is-fading");
+    setTimeout(function () {
+      applyImage();
+    }, FADE_DURATION_MS);
+
+    if (fromUser) {
+      pauseThenResume();
+      if (typeof track === "function") track("click_thumbnail", { index: currentIndex });
+    }
+  }
+
+  function nextImage(fromUser) {
+    setImage(currentIndex + 1, { fromUser: fromUser !== false });
+  }
+
+  function prevImage(fromUser) {
+    setImage(currentIndex - 1, { fromUser: fromUser !== false });
+  }
+
+  function initGallery() {
+    var thumbs = document.querySelectorAll(".gallery__thumb");
+    var prevBtn = document.querySelector(".gallery__arrow--prev");
+    var nextBtn = document.querySelector(".gallery__arrow--next");
+
+    setImage(0, { skipFade: true });
+    startAutoAdvance();
 
     thumbs.forEach(function (thumb, idx) {
       thumb.addEventListener("click", function () {
-        setCurrent(idx);
-        resetAutoAdvance();
+        setImage(idx, { fromUser: true });
       });
     });
-    if (prevBtn) prevBtn.addEventListener("click", function () { setCurrent(current - 1); resetAutoAdvance(); });
-    if (nextBtn) nextBtn.addEventListener("click", function () { setCurrent(current + 1); resetAutoAdvance(); });
-    setCurrent(0);
 
-    var autoAdvanceMs = 4500;
-    var autoAdvanceId;
-    function startAutoAdvance() {
-      autoAdvanceId = setInterval(goNext, autoAdvanceMs);
+    if (prevBtn) {
+      prevBtn.addEventListener("click", function () {
+        prevImage(true);
+      });
     }
-    function resetAutoAdvance() {
-      if (autoAdvanceId) clearInterval(autoAdvanceId);
-      startAutoAdvance();
+    if (nextBtn) {
+      nextBtn.addEventListener("click", function () {
+        nextImage(true);
+      });
     }
-    startAutoAdvance();
+
+    document.addEventListener("keydown", function (e) {
+      var tag = e.target && e.target.tagName ? e.target.tagName.toUpperCase() : "";
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        prevImage(true);
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        nextImage(true);
+      }
+    });
   }
 
   function initPackSelector() {
@@ -142,6 +208,7 @@
         var price = btn.getAttribute("data-price");
         setPackSelection(pkg);
         syncFromPack();
+        setImage(0, { fromUser: true, skipFade: false });
         if (typeof track === "function") track("select_pack", { package: pkg, price: price });
       });
     });

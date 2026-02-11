@@ -28,25 +28,25 @@
       <div class="card__inner">
         <!-- Left: Product gallery (vertical thumbnails + main image) -->
         <div class="card__media">
-          <div class="gallery">
+          <div class="gallery" role="region" aria-label="Product image gallery">
             <div class="gallery__thumb-col">
               <div class="gallery__thumbnails" role="tablist" aria-label="Product image gallery">
-                <button type="button" class="gallery__thumb is-active" data-index="0" aria-label="View image 1" aria-selected="true"><img src="./assets/CErouter1pack.png" alt=""></button>
-                <button type="button" class="gallery__thumb" data-index="1" aria-label="View image 2" aria-selected="false"><img src="./assets/routerathome.png" alt=""></button>
-                <button type="button" class="gallery__thumb" data-index="2" aria-label="View image 3" aria-selected="false"><img src="./assets/1packcoverage.png" alt=""></button>
-                <button type="button" class="gallery__thumb" data-index="3" aria-label="View image 4" aria-selected="false"><img src="./assets/CErouter2pack.png" alt=""></button>
-                <button type="button" class="gallery__thumb" data-index="4" aria-label="View image 5" aria-selected="false"><img src="./assets/2packcoverage.png" alt=""></button>
+                <button type="button" class="gallery__thumb is-active" data-index="0" aria-label="View image 1 — Covenant Eyes Router 1 Pack" aria-selected="true"><img src="./assets/CErouter1pack.png" alt="" loading="lazy"></button>
+                <button type="button" class="gallery__thumb" data-index="1" aria-label="View image 2 — Router at home" aria-selected="false"><img src="./assets/routerathome.png" alt="" loading="lazy"></button>
+                <button type="button" class="gallery__thumb" data-index="2" aria-label="View image 3 — 1 Pack coverage" aria-selected="false"><img src="./assets/1packcoverage.png" alt="" loading="lazy"></button>
+                <button type="button" class="gallery__thumb" data-index="3" aria-label="View image 4 — Covenant Eyes Router 2 Pack" aria-selected="false"><img src="./assets/CErouter2pack.png" alt="" loading="lazy"></button>
+                <button type="button" class="gallery__thumb" data-index="4" aria-label="View image 5 — 2 Pack coverage" aria-selected="false"><img src="./assets/2packcoverage.png" alt="" loading="lazy"></button>
               </div>
               <div class="gallery__nav">
                 <button type="button" class="gallery__arrow gallery__arrow--prev" aria-label="Previous image">‹</button>
-                <span class="gallery__counter" id="gallery-counter">1 / 5</span>
+                <span class="gallery__counter" id="gallery-counter" aria-live="polite">1 / 5</span>
                 <button type="button" class="gallery__arrow gallery__arrow--next" aria-label="Next image">›</button>
               </div>
             </div>
             <div class="gallery__main-col">
               <div class="gallery__main-wrap">
-                <div class="gallery__main-bg"></div>
-                <img class="gallery__main" id="product-image" src="./assets/CErouter1pack.png" alt="Covenant Eyes Router — 1 Pack">
+                <div class="gallery__main-bg" aria-hidden="true"></div>
+                <img class="gallery__main" id="product-image" src="./assets/CErouter1pack.png" alt="Covenant Eyes Router — 1 Pack" loading="eager">
               </div>
               <p class="gallery__caption">Concept art. Beta Program visuals — final design may vary.</p>
             </div>
