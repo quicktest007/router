@@ -34,7 +34,7 @@
   function setSummary(pkg, price) {
     var label = pkg === "1pack" ? "1 Pack" : "2 Pack";
     var el = document.getElementById("summary-value");
-    if (el) el.textContent = label + " — $" + price + ".00 USD";
+    if (el) el.textContent = label + " — $" + price + " USD";
   }
 
   function validateEmail(value) {

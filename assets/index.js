@@ -16,7 +16,7 @@
 
   function updatePrice(price) {
     var el = document.getElementById("dynamic-price");
-    if (el) el.textContent = "$" + price + ".00";
+    if (el) el.textContent = "$" + price;
   }
 
   function updateCheckoutHref(pkg) {
