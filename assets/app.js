@@ -1,5 +1,6 @@
 /**
- * Covenant Eyes Router – Analytics & shared behavior
+ * Covenant Eyes Router – Tracking and UTM
+ * Plain JS, no frameworks.
  */
 
 (function () {
@@ -8,11 +9,6 @@
   var EVENTS_KEY = "events";
   var UTM_KEY = "utm";
 
-  /**
-   * Track an event. Logs in dev and appends to localStorage "events" array.
-   * @param {string} eventName - e.g. "view_product", "select_package", "submit_email"
-   * @param {Object} [props] - optional event properties
-   */
   window.track = function (eventName, props) {
     var payload = {
       name: eventName,
@@ -23,19 +19,15 @@
       console.log("[track]", eventName, payload);
     }
     try {
-      var stored = localStorage.getItem(EVENTS_KEY);
-      var list = stored ? JSON.parse(stored) : [];
+      var raw = localStorage.getItem(EVENTS_KEY);
+      var list = raw ? JSON.parse(raw) : [];
       list.push(payload);
       localStorage.setItem(EVENTS_KEY, JSON.stringify(list));
     } catch (e) {
-      if (console && console.warn) console.warn("track storage failed", e);
+      if (console && console.warn) console.warn("track failed", e);
     }
   };
 
-  /**
-   * Capture UTM params and referrer from URL; store in localStorage.
-   * Call once on index.html load.
-   */
   window.captureUTM = function () {
     try {
       var params = new URLSearchParams(window.location.search);
@@ -53,14 +45,10 @@
     }
   };
 
-  /**
-   * Get stored UTM object (for lead payload).
-   * @returns {Object}
-   */
   window.getStoredUTM = function () {
     try {
-      var stored = localStorage.getItem(UTM_KEY);
-      return stored ? JSON.parse(stored) : {};
+      var raw = localStorage.getItem(UTM_KEY);
+      return raw ? JSON.parse(raw) : {};
     } catch (e) {
       return {};
     }
