@@ -26,18 +26,13 @@
     </div>
     <main class="card" aria-labelledby="product-title">
       <div class="card__inner">
-        <div class="card__media">
-          <div class="card__image-wrap">
-            <img class="card__image" id="product-image" src="./assets/CErouter1pack.png" alt="Covenant Eyes Router — 1 Pack" width="320" height="auto">
-            <p class="card__image-caption">This is not a real product, but concept art.</p>
-          </div>
-        </div>
+        <!-- Left: Product details + options -->
         <div class="card__content">
           <h1 id="product-title" class="card__title">Covenant Eyes Router</h1>
 
-          <div class="card__pills" role="group" aria-label="Package selection">
-            <button type="button" class="card__pill is-selected" data-package="1pack" data-price="299.00" aria-pressed="true">1 Pack</button>
-            <button type="button" class="card__pill" data-package="2pack" data-price="499.00" aria-pressed="false">2 Pack</button>
+          <div class="pack-selector" role="group" aria-label="Package selection">
+            <button type="button" class="pack-selector__btn is-selected" data-package="1pack" data-price="299.00" aria-pressed="true">1 PACK</button>
+            <button type="button" class="pack-selector__btn" data-package="2pack" data-price="499.00" aria-pressed="false">2 PACK</button>
           </div>
 
           <p class="card__description">Whole-home WiFi protection and performance powered by next-generation WiFi 6 technology.</p>
@@ -51,9 +46,71 @@
 
           <p class="card__price-label">Online price</p>
           <p class="card__price" id="dynamic-price" aria-live="polite">$299.00</p>
+          <p class="card__savings" id="savings-line">You save $0 (standard pricing)</p>
+          <p class="card__beta-note">Beta Program pricing — limited availability</p>
 
-          <div class="card__actions">
-            <a href="checkout.html" class="card__btn card__btn--primary" id="btn-checkout">Checkout</a>
+          <p class="card__shipping">FREE US Shipping · 90-Day Satisfaction Guarantee</p>
+
+          <!-- Choose best for your home -->
+          <section class="home-guide" aria-labelledby="home-guide-title">
+            <h2 id="home-guide-title" class="home-guide__title">Choose the Covenant Eyes Router that's best for your home.</h2>
+            <div class="home-guide__tiles">
+              <button type="button" class="home-guide__tile" data-profile="premium" data-recommend="2pack" data-rationale="Better coverage and future-proof for WiFi 6.">
+                <span class="home-guide__tile-label">WiFi 6 + Fastest (Premium)</span>
+                <span class="home-guide__tile-desc">Up to 2,500 sqft home with 10+ connected devices. Need the newest WiFi 6 technology and the fastest internet speeds.</span>
+              </button>
+              <button type="button" class="home-guide__tile" data-profile="performance" data-recommend="1pack" data-rationale="Great performance for your space.">
+                <span class="home-guide__tile-label">Great Performance (No latest tech needed)</span>
+                <span class="home-guide__tile-desc">Up to 2,500 sqft home with 10+ connected devices. Lightning-fast WiFi performance, but don't need the latest tech.</span>
+              </button>
+              <button type="button" class="home-guide__tile" data-profile="value" data-recommend="1pack" data-rationale="Solid value for smaller homes.">
+                <span class="home-guide__tile-label">Best Value (Smaller home)</span>
+                <span class="home-guide__tile-desc">Up to 1,500 sqft home with fewer than 10 connected devices. Want solid value that gets the job done vs. the fastest WiFi performance.</span>
+              </button>
+              <button type="button" class="home-guide__tile" data-profile="coverage" data-recommend="2pack" data-rationale="Flexible coverage for larger homes.">
+                <span class="home-guide__tile-label">Flexible Coverage (Large home, fewer devices)</span>
+                <span class="home-guide__tile-desc">Up to 5,000 sqft home with fewer than 10 connected devices. Need flexible WiFi coverage and value vs. the fastest WiFi performance.</span>
+              </button>
+            </div>
+            <p class="home-guide__recommendation" id="home-recommendation" aria-live="polite"></p>
+          </section>
+
+          <p class="card__installments">Estimated payments available at launch (Beta Program).</p>
+
+          <div class="cta-bar">
+            <div class="qty-selector" role="group" aria-label="Quantity">
+              <button type="button" class="qty-selector__btn" id="qty-minus" aria-label="Decrease quantity">−</button>
+              <input type="number" class="qty-selector__input" id="qty-input" value="1" min="1" max="99" aria-label="Quantity" readonly>
+              <button type="button" class="qty-selector__btn" id="qty-plus" aria-label="Increase quantity">+</button>
+            </div>
+            <button type="button" class="cta-bar__add-cart" id="btn-add-cart">
+              <span class="cta-bar__cart-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+              </span>
+              Add to cart
+            </button>
+          </div>
+          <p class="card__disclaimer">No payment collected in Beta Program.</p>
+        </div>
+
+        <!-- Right: Product gallery -->
+        <div class="card__media">
+          <div class="gallery">
+            <div class="gallery__thumbnails" role="tablist" aria-label="Product image gallery">
+              <button type="button" class="gallery__thumb is-active" data-index="0" aria-label="View image 1" aria-selected="true"><img src="./assets/CErouter1pack.png" alt=""></button>
+              <button type="button" class="gallery__thumb" data-index="1" aria-label="View image 2" aria-selected="false"><img src="./assets/CErouter2pack.png" alt=""></button>
+              <button type="button" class="gallery__thumb" data-index="2" aria-label="View image 3" aria-selected="false"><img src="./assets/CErouter1pack.png" alt=""></button>
+              <button type="button" class="gallery__thumb" data-index="3" aria-label="View image 4" aria-selected="false"><img src="./assets/CErouter2pack.png" alt=""></button>
+            </div>
+            <div class="gallery__main-wrap">
+              <img class="gallery__main" id="product-image" src="./assets/CErouter1pack.png" alt="Covenant Eyes Router — 1 Pack" width="320" height="auto">
+            </div>
+            <div class="gallery__nav">
+              <button type="button" class="gallery__arrow gallery__arrow--prev" aria-label="Previous image">‹</button>
+              <span class="gallery__counter" id="gallery-counter">1 / 4</span>
+              <button type="button" class="gallery__arrow gallery__arrow--next" aria-label="Next image">›</button>
+            </div>
+            <p class="gallery__caption">Concept art. Beta Program visuals — final design may vary.</p>
           </div>
         </div>
       </div>
@@ -63,8 +120,8 @@
   <footer class="footer" role="contentinfo">
     <div class="footer__inner">
       <div class="footer__copy">
-        <p class="footer__tagline">Pilot program</p>
-        <p class="footer__text">This is a pilot test to gauge interest. No payment will be collected. We are validating demand for the Covenant Eyes Router.</p>
+        <p class="footer__tagline">Beta Program</p>
+        <p class="footer__text">This is a Beta Program to gauge interest. No payment will be collected. We are validating demand for the Covenant Eyes Router.</p>
       </div>
       <div class="footer__links">
         <a href="./privacy.html" class="footer__link">Privacy Policy</a>

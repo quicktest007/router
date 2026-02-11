@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Complete Your Reservation – Covenant Eyes Router</title>
+  <title>Beta Program Checkout – Covenant Eyes Router</title>
   <link rel="stylesheet" href="./assets/styles.css">
 </head>
 <body>
@@ -24,11 +24,14 @@
       <div class="card__inner">
         <div class="card__content">
           <a href="index.html" class="checkout__back">← Back to product</a>
-          <h1 class="checkout__title">Complete Your Reservation</h1>
+          <h1 class="checkout__title">Beta Program Checkout</h1>
 
           <div id="checkout-summary" class="checkout__summary">
             <p class="checkout__summary-label">Your selection</p>
             <p class="checkout__summary-value" id="summary-value">—</p>
+            <p class="checkout__summary-qty" id="summary-qty"></p>
+            <p class="checkout__summary-total" id="summary-total"></p>
+            <p class="checkout__summary-savings" id="summary-savings"></p>
           </div>
 
           <div id="checkout-form-block" class="checkout__form-block">
@@ -38,8 +41,8 @@
                 <input type="email" id="email" class="checkout__input" name="email" required placeholder="you@example.com" autocomplete="email">
                 <p id="email-error" class="checkout__error" role="alert" aria-live="polite" style="display: none;"></p>
               </div>
-              <button type="submit" class="checkout__submit">Complete Checkout</button>
-              <p class="checkout__microcopy">No payment will be collected during this pilot. We are validating interest in the Covenant Eyes Router.</p>
+              <button type="submit" class="checkout__submit">Reserve spot in Beta Program</button>
+              <p class="checkout__microcopy">No payment will be collected. We are validating interest in the Covenant Eyes Router.</p>
             </form>
           </div>
 
@@ -56,8 +59,8 @@
   <footer class="footer" role="contentinfo">
     <div class="footer__inner">
       <div class="footer__copy">
-        <p class="footer__tagline">Pilot program</p>
-        <p class="footer__text">This is a pilot test to gauge interest. No payment will be collected. We are validating demand for the Covenant Eyes Router.</p>
+        <p class="footer__tagline">Beta Program</p>
+        <p class="footer__text">This is a Beta Program to gauge interest. No payment will be collected. We are validating demand for the Covenant Eyes Router.</p>
       </div>
       <div class="footer__links">
         <a href="./privacy.html" class="footer__link">Privacy Policy</a>

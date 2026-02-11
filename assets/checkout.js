@@ -1,5 +1,5 @@
 /**
- * Covenant Eyes Router – Checkout: summary, email form, lead storage, optional webhook
+ * Covenant Eyes Router – Checkout: summary (pack, qty, total, savings), email, lead
  */
 
 (function () {
@@ -14,27 +14,64 @@
 
   function getSelection() {
     var q = getQueryParam("package");
-    if (q === "1pack" || q === "2pack") {
-      return { package: q, price: q === "1pack" ? "299.00" : "499.00" };
+    var pkg = (q === "1pack" || q === "2pack") ? q : null;
+    if (!pkg) {
+      try {
+        pkg = localStorage.getItem("selected_package");
+        if (pkg !== "1pack" && pkg !== "2pack") pkg = null;
+      } catch (e) {}
     }
-    try {
-      var pkg = localStorage.getItem("selected_package");
-      var price = localStorage.getItem("selected_price");
-      if (pkg && (pkg === "1pack" || pkg === "2pack")) {
-        return { package: pkg, price: price || (pkg === "1pack" ? "299.00" : "499.00") };
-      }
-    } catch (e) {}
-    return null;
+    if (!pkg) return null;
+
+    var priceStr = getQueryParam("price") || localStorage.getItem("selected_price");
+    var price = (pkg === "1pack" ? "299.00" : "499.00");
+    if (priceStr === "299" || priceStr === "299.00") price = "299.00";
+    if (priceStr === "499" || priceStr === "499.00") price = "499.00";
+
+    var qtyStr = getQueryParam("qty") || localStorage.getItem("selected_qty");
+    var qty = 1;
+    if (qtyStr) {
+      var n = parseInt(qtyStr, 10);
+      if (!isNaN(n) && n >= 1) qty = Math.min(99, n);
+    }
+
+    var savingsStr = getQueryParam("savings") || localStorage.getItem("selected_savings");
+    var savings = pkg === "2pack" ? 99 : 0;
+    if (savingsStr) {
+      var s = parseInt(savingsStr, 10);
+      if (!isNaN(s)) savings = s;
+    }
+
+    return { package: pkg, price: price, qty: qty, savings: savings };
   }
 
   function redirectToIndex() {
     window.location.replace("index.html");
   }
 
-  function setSummary(pkg, price) {
-    var label = pkg === "1pack" ? "1 Pack" : "2 Pack";
-    var el = document.getElementById("summary-value");
-    if (el) el.textContent = label + " — $" + price + " USD";
+  function setSummary(selection) {
+    var label = selection.package === "1pack" ? "1 Pack" : "2 Pack";
+    var unitPrice = parseFloat(selection.price, 10);
+    var total = (unitPrice * selection.qty).toFixed(2);
+
+    var valEl = document.getElementById("summary-value");
+    if (valEl) valEl.textContent = label + " — $" + selection.price + " each";
+
+    var qtyEl = document.getElementById("summary-qty");
+    if (qtyEl) qtyEl.textContent = "Quantity: " + selection.qty;
+
+    var totalEl = document.getElementById("summary-total");
+    if (totalEl) totalEl.textContent = "Total: $" + total + " USD";
+
+    var savEl = document.getElementById("summary-savings");
+    if (savEl) {
+      if (selection.savings > 0) {
+        savEl.textContent = "You save $" + selection.savings + " (vs. buying two 1-packs)";
+        savEl.style.display = "block";
+      } else {
+        savEl.style.display = "none";
+      }
+    }
   }
 
   function validateEmail(value) {
@@ -70,12 +107,15 @@
     }
   }
 
-  function buildLead(email, pkg, price) {
+  function buildLead(email, selection) {
     var utm = typeof getStoredUTM === "function" ? getStoredUTM() : {};
     return {
       email: email,
-      selected_package: pkg,
-      price: price,
+      selected_package: selection.package,
+      price: selection.price,
+      qty: selection.qty,
+      savings: selection.savings,
+      total: (parseFloat(selection.price, 10) * selection.qty).toFixed(2),
       timestamp: new Date().toISOString(),
       referrer: utm.referrer || (typeof document !== "undefined" && document.referrer) || null,
       user_agent: typeof navigator !== "undefined" && navigator.userAgent ? navigator.userAgent : null,
@@ -119,7 +159,7 @@
       return;
     }
 
-    setSummary(selection.package, selection.price);
+    setSummary(selection);
 
     var form = document.getElementById("checkout-form");
     var emailInput = document.getElementById("email");
@@ -142,14 +182,18 @@
         }
 
         if (typeof track === "function") {
-          track("submit_email", { email: email, package: selection.package, price: selection.price });
+          track("submit_email", {
+            email: email,
+            package: selection.package,
+            price: selection.price,
+            qty: selection.qty,
+            savings: selection.savings
+          });
         }
 
-        var lead = buildLead(email, selection.package, selection.price);
+        var lead = buildLead(email, selection);
         saveLead(lead);
-
         sendWebhook(lead, function () {});
-
         showSuccess();
       });
     }

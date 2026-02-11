@@ -1,17 +1,41 @@
 /**
- * Covenant Eyes Router – Index page: pills, price, checkout, learn more
+ * Covenant Eyes Router – Index: gallery, pack selector, home guide, add to cart
  */
 
 (function () {
   "use strict";
 
-  function getSelection() {
-    var selected = document.querySelector(".card__pill.is-selected");
-    if (!selected) return { package: "1pack", price: "299.00" };
+  var GALLERY_SRCS = [
+    "./assets/CErouter1pack.png",
+    "./assets/CErouter2pack.png",
+    "./assets/CErouter1pack.png",
+    "./assets/CErouter2pack.png"
+  ];
+  var GALLERY_ALTS = [
+    "Covenant Eyes Router — 1 Pack",
+    "Covenant Eyes Router — 2 Pack",
+    "Covenant Eyes Router — angle",
+    "Covenant Eyes Router — lifestyle"
+  ];
+  var CURRENT_INDEX_KEY = "gallery_index";
+  var SAVINGS_2PACK = 99;
+
+  function getPackSelection() {
+    var btn = document.querySelector(".pack-selector__btn.is-selected");
+    if (!btn) return { package: "1pack", price: "299.00" };
     return {
-      package: selected.getAttribute("data-package"),
-      price: selected.getAttribute("data-price")
+      package: btn.getAttribute("data-package"),
+      price: btn.getAttribute("data-price")
     };
+  }
+
+  function setPackSelection(pkg) {
+    var btns = document.querySelectorAll(".pack-selector__btn");
+    btns.forEach(function (b) {
+      var isSel = b.getAttribute("data-package") === pkg;
+      b.classList.toggle("is-selected", isSel);
+      b.setAttribute("aria-pressed", isSel ? "true" : "false");
+    });
   }
 
   function updatePrice(price) {
@@ -19,9 +43,14 @@
     if (el) el.textContent = "$" + price;
   }
 
-  function updateCheckoutHref(pkg) {
-    var el = document.getElementById("btn-checkout");
-    if (el) el.setAttribute("href", "checkout.html?package=" + encodeURIComponent(pkg));
+  function updateSavings(pkg) {
+    var el = document.getElementById("savings-line");
+    if (!el) return;
+    if (pkg === "2pack") {
+      el.innerHTML = "You save <span class=\"card__savings-amount\">$" + SAVINGS_2PACK + "</span> (vs. buying two 1-packs)";
+    } else {
+      el.innerHTML = "You save <span class=\"card__savings-amount\">$0</span> (standard pricing)";
+    }
   }
 
   function updateProductImage(pkg) {
@@ -33,51 +62,136 @@
     img.setAttribute("alt", alt);
   }
 
-  function syncUI() {
-    var s = getSelection();
+  function getQty() {
+    var input = document.getElementById("qty-input");
+    if (!input) return 1;
+    var n = parseInt(input.value, 10);
+    return isNaN(n) || n < 1 ? 1 : Math.min(99, n);
+  }
+
+  function getSavings(pkg) {
+    return pkg === "2pack" ? SAVINGS_2PACK : 0;
+  }
+
+  function syncFromPack() {
+    var s = getPackSelection();
     updatePrice(s.price);
-    updateCheckoutHref(s.package);
+    updateSavings(s.package);
     updateProductImage(s.package);
+    try {
+      localStorage.setItem("selected_package", s.package);
+      localStorage.setItem("selected_price", s.price);
+    } catch (e) {}
+  }
+
+  function initGallery() {
+    var main = document.getElementById("product-image");
+    var thumbs = document.querySelectorAll(".gallery__thumb");
+    var counter = document.getElementById("gallery-counter");
+    var prevBtn = document.querySelector(".gallery__arrow--prev");
+    var nextBtn = document.querySelector(".gallery__arrow--next");
+    var current = 0;
+
+    function setCurrent(i) {
+      current = (i + GALLERY_SRCS.length) % GALLERY_SRCS.length;
+      if (main) {
+        main.setAttribute("src", GALLERY_SRCS[current]);
+        main.setAttribute("alt", GALLERY_ALTS[current]);
+      }
+      thumbs.forEach(function (t, idx) {
+        t.classList.toggle("is-active", idx === current);
+        t.setAttribute("aria-selected", idx === current ? "true" : "false");
+      });
+      if (counter) counter.textContent = (current + 1) + " / " + GALLERY_SRCS.length;
+      if (typeof track === "function") track("click_thumbnail", { index: current });
+    }
+
+    thumbs.forEach(function (thumb, idx) {
+      thumb.addEventListener("click", function () {
+        setCurrent(idx);
+      });
+    });
+    if (prevBtn) prevBtn.addEventListener("click", function () { setCurrent(current - 1); });
+    if (nextBtn) nextBtn.addEventListener("click", function () { setCurrent(current + 1); });
+  }
+
+  function initPackSelector() {
+    var btns = document.querySelectorAll(".pack-selector__btn");
+    btns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var pkg = btn.getAttribute("data-package");
+        var price = btn.getAttribute("data-price");
+        setPackSelection(pkg);
+        syncFromPack();
+        if (typeof track === "function") track("select_pack", { package: pkg, price: price });
+      });
+    });
+  }
+
+  function initHomeGuide() {
+    var tiles = document.querySelectorAll(".home-guide__tile");
+    var recEl = document.getElementById("home-recommendation");
+
+    tiles.forEach(function (tile) {
+      tile.addEventListener("click", function () {
+        tiles.forEach(function (t) { t.classList.remove("is-selected"); });
+        tile.classList.add("is-selected");
+        var profile = tile.getAttribute("data-profile");
+        var recommend = tile.getAttribute("data-recommend");
+        var rationale = tile.getAttribute("data-rationale");
+        setPackSelection(recommend);
+        syncFromPack();
+        if (recEl) recEl.textContent = "We recommend " + (recommend === "2pack" ? "2 Pack" : "1 Pack") + ". " + rationale;
+        if (typeof track === "function") track("select_home_profile", { profile: profile, recommended_pack: recommend });
+      });
+    });
+  }
+
+  function initQty() {
+    var minus = document.getElementById("qty-minus");
+    var plus = document.getElementById("qty-plus");
+    var input = document.getElementById("qty-input");
+    if (!input) return;
+
+    function setQty(n) {
+      n = Math.max(1, Math.min(99, n));
+      input.value = String(n);
+    }
+
+    if (minus) minus.addEventListener("click", function () { setQty(getQty() - 1); });
+    if (plus) plus.addEventListener("click", function () { setQty(getQty() + 1); });
+  }
+
+  function initAddToCart() {
+    var btn = document.getElementById("btn-add-cart");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var s = getPackSelection();
+      var qty = getQty();
+      var savings = getSavings(s.package);
+      if (typeof track === "function") track("add_to_cart", { package: s.package, price: s.price, qty: qty, savings: savings });
+      try {
+        localStorage.setItem("selected_package", s.package);
+        localStorage.setItem("selected_price", s.price);
+        localStorage.setItem("selected_qty", String(qty));
+        localStorage.setItem("selected_savings", String(savings));
+      } catch (e) {}
+      var url = "checkout.html?package=" + encodeURIComponent(s.package) + "&price=" + encodeURIComponent(s.price) + "&qty=" + encodeURIComponent(qty) + "&savings=" + encodeURIComponent(savings);
+      window.location.href = url;
+    });
   }
 
   function init() {
     if (typeof captureUTM === "function") captureUTM();
     if (typeof track === "function") track("view_product", {});
 
-    var pills = document.querySelectorAll(".card__pill");
-    pills.forEach(function (pill) {
-      pill.addEventListener("click", function () {
-        pills.forEach(function (p) {
-          p.classList.remove("is-selected");
-          p.setAttribute("aria-pressed", "false");
-        });
-        pill.classList.add("is-selected");
-        pill.setAttribute("aria-pressed", "true");
-        syncUI();
-        if (typeof track === "function") {
-          track("select_package", {
-            package: pill.getAttribute("data-package"),
-            price: pill.getAttribute("data-price")
-          });
-        }
-      });
-    });
+    initGallery();
+    initPackSelector();
+    initHomeGuide();
+    initQty();
+    initAddToCart();
 
-    var checkoutBtn = document.getElementById("btn-checkout");
-    if (checkoutBtn) {
-      checkoutBtn.addEventListener("click", function (e) {
-        var s = getSelection();
-        try {
-          localStorage.setItem("selected_package", s.package);
-          localStorage.setItem("selected_price", s.price);
-        } catch (err) {}
-        if (typeof track === "function") track("click_checkout", { package: s.package, price: s.price });
-        e.preventDefault();
-        window.location.href = "checkout.html?package=" + encodeURIComponent(s.package);
-      });
-    }
-
-    syncUI();
+    syncFromPack();
   }
 
   if (document.readyState === "loading") {

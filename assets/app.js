@@ -1,6 +1,6 @@
 /**
  * Covenant Eyes Router – Tracking and UTM
- * Plain JS, no frameworks.
+ * Events: view_product, select_pack, click_thumbnail, select_home_profile, add_to_cart, submit_email
  */
 
 (function () {
