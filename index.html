@@ -9,65 +9,75 @@
 <body>
   <nav class="nav" role="navigation">
     <span class="nav__brand">Covenant Eyes Router</span>
-    <a class="nav__link" href="#pricing">Choose Your Package</a>
+    <a class="nav__link" href="#product">Choose Your Package</a>
   </nav>
 
-  <header class="hero">
-    <h1 class="hero__headline">Whole-Home Protection Starts at the Router</h1>
-    <p class="hero__subheadline">The Covenant Eyes Router delivers powerful WiFi performance with built-in network-level protection for every device in your home.</p>
-    <a class="hero__cta" href="#pricing" id="hero-cta">Choose Your Package</a>
-    <div class="hero__image-wrap">
-      <img class="hero__image" src="assets/router.png" alt="Covenant Eyes Router" width="400" height="auto">
-    </div>
-  </header>
+  <main class="product-card" id="product" aria-labelledby="product-title">
+    <div class="product-card__inner">
+      <div class="product-card__content">
+        <h1 id="product-title" class="product-card__title">Covenant Eyes Router</h1>
 
-  <section class="benefits" aria-labelledby="benefits-title">
-    <h2 id="benefits-title" class="section__title">Built for Performance</h2>
-    <ul class="benefits__list">
-      <li class="benefits__item">
-        <span class="benefits__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        </span>
-        <span>Our fastest Gryphon model (up to 40% boost in performance)</span>
-      </li>
-      <li class="benefits__item">
-        <span class="benefits__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        </span>
-        <span>WiFi coverage for homes 2,000 sqft and up</span>
-      </li>
-      <li class="benefits__item">
-        <span class="benefits__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        </span>
-        <span>Supports even the busiest WiFi traffic and lots of connected devices</span>
-      </li>
-      <li class="benefits__item">
-        <span class="benefits__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        </span>
-        <span>Maximize the internet speeds of your WiFi 6 devices</span>
-      </li>
-    </ul>
-  </section>
+        <div class="product-card__pills" role="group" aria-label="Package selection">
+          <button type="button" class="product-card__pill is-active" data-package="1pack" data-price="299.00" aria-pressed="true">1 Pack</button>
+          <button type="button" class="product-card__pill" data-package="2pack" data-price="499.00" aria-pressed="false">2 Pack</button>
+        </div>
 
-  <section class="pricing section" id="pricing" aria-labelledby="pricing-title">
-    <h2 id="pricing-title" class="section__title">Choose Your Package</h2>
-    <div class="pricing__grid">
-      <div class="pricing__card">
-        <h3 class="pricing__card-title">1 Pack</h3>
-        <p class="pricing__card-subtitle">Ideal for standard homes</p>
-        <p class="pricing__price">$299.00 <span>USD</span></p>
-        <button type="button" class="pricing__btn" data-package="1pack" data-price="299.00">Select 1 Pack</button>
+        <p class="product-card__subheadline">The latest Gryphon model powered by next-gen WiFi 6 technology. Whole-home protection starts at the router.</p>
+
+        <ul class="product-card__benefits" aria-label="Features">
+          <li class="product-card__benefit">
+            <span class="product-card__benefit-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span>Our fastest Gryphon model (up to 40% boost in performance)</span>
+          </li>
+          <li class="product-card__benefit">
+            <span class="product-card__benefit-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span>WiFi coverage for homes 2,000 sqft and up</span>
+          </li>
+          <li class="product-card__benefit">
+            <span class="product-card__benefit-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span>Supports even the busiest WiFi traffic and lots of connected devices</span>
+          </li>
+          <li class="product-card__benefit">
+            <span class="product-card__benefit-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </span>
+            <span>Maximize the internet speeds of your WiFi 6 devices</span>
+          </li>
+        </ul>
+
+        <p class="product-card__price-label">Online price</p>
+        <p class="product-card__price" id="product-price" aria-live="polite">$299.00 <span>USD</span></p>
+
+        <div class="product-card__badge" id="product-badge" aria-hidden="true">Best Coverage</div>
+
+        <div class="product-card__actions">
+          <a class="product-card__cta-primary" href="checkout.html" id="product-cta">Choose Your Package</a>
+          <a class="product-card__cta-secondary" href="#benefits-detail">Learn more</a>
+        </div>
       </div>
-      <div class="pricing__card">
-        <span class="pricing__badge">Best Coverage</span>
-        <h3 class="pricing__card-title">2 Pack</h3>
-        <p class="pricing__card-subtitle">Extended coverage for larger or multi-level homes</p>
-        <p class="pricing__price">$499.00 <span>USD</span></p>
-        <button type="button" class="pricing__btn" data-package="2pack" data-price="499.00">Select 2 Pack</button>
+
+      <div class="product-card__media">
+        <div class="product-card__signals" aria-hidden="true">
+          <span class="product-card__signal"></span>
+          <span class="product-card__signal"></span>
+          <span class="product-card__signal"></span>
+        </div>
+        <div class="product-card__image-wrap">
+          <img class="product-card__image" src="assets/router.png" alt="Covenant Eyes Router" width="400" height="auto">
+        </div>
       </div>
     </div>
+  </main>
+
+  <section class="benefits-detail" id="benefits-detail" aria-labelledby="benefits-detail-title">
+    <h2 id="benefits-detail-title" class="section__title">Built for Performance</h2>
+    <p class="benefits-detail__intro">The Covenant Eyes Router delivers powerful WiFi performance with built-in network-level protection for every device in your home.</p>
   </section>
 
   <footer class="footer">
