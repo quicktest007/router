@@ -20,7 +20,10 @@ Static site (HTML, CSS, JS only). No frameworks, no build tools. Runs by opening
 
 ## Local run
 
-Open `index.html` in a browser (double-click or drag into the browser). Or serve the folder:
+**Important:** Open or serve the site from the **project root** (the folder that contains both `index.html` and the `assets` folder). If you open an `index.html` that lives in a different folder, the CSS and images won’t load and the page will look unstyled.
+
+- Double-click `index.html` in the project root, or drag it into the browser.  
+- Or serve the folder from the project root:
 
 ```bash
 python3 -m http.server 8000

@@ -227,6 +227,9 @@ a {
   max-width: 320px;
   margin: 0 auto;
   filter: drop-shadow(0 12px 24px rgba(0, 46, 112, 0.15));
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .card__image {
