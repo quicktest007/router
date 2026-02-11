@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="./assets/styles.css">
 </head>
 <body>
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <a href="./index.html" class="header__brand">Covenant Eyes Router</a>
+    </div>
+  </header>
+
   <div class="page">
     <main class="card" aria-labelledby="product-title">
       <div class="card__inner">
@@ -32,7 +38,6 @@
 
           <div class="card__actions">
             <a href="checkout.html" class="card__btn card__btn--primary" id="btn-checkout">Checkout</a>
-            <a href="#faq" class="card__btn card__btn--secondary" id="btn-learn-more">Learn More</a>
           </div>
         </div>
 
@@ -43,29 +48,11 @@
         </div>
       </div>
     </main>
-
-    <section class="faq" id="faq" aria-labelledby="faq-title">
-      <h2 id="faq-title" class="faq__title">Frequently Asked Questions</h2>
-      <ul class="faq__list">
-        <li class="faq__item">
-          <p class="faq__question">How do I set up the router?</p>
-          <p class="faq__answer">Use the Covenant Eyes app to connect the router to your network. Plug in the device, follow the in-app steps, and you’re done. No technical experience required.</p>
-        </li>
-        <li class="faq__item">
-          <p class="faq__question">What devices are compatible?</p>
-          <p class="faq__answer">The router works with any WiFi-enabled device: phones, tablets, laptops, smart TVs, and smart home devices. No per-device software is required.</p>
-        </li>
-        <li class="faq__item">
-          <p class="faq__question">Is a subscription required?</p>
-          <p class="faq__answer">Covenant Eyes Router works with your existing Covenant Eyes subscription. Network-level protection applies to all devices on your home WiFi.</p>
-        </li>
-        <li class="faq__item">
-          <p class="faq__question">When will the router be available?</p>
-          <p class="faq__answer">We’re in a pilot phase and validating interest. Complete the reservation form to join the list; we’ll notify you as soon as the Covenant Eyes Router is available to order.</p>
-        </li>
-      </ul>
-    </section>
   </div>
+
+  <footer class="footer" role="contentinfo">
+    <p class="footer__text">This is a pilot test to gauge interest. No payment will be collected. We are validating demand for the Covenant Eyes Router.</p>
+  </footer>
 
   <script src="./assets/config.js"></script>
   <script src="./assets/app.js"></script>

@@ -67,17 +67,6 @@
       });
     }
 
-    var learnMore = document.getElementById("btn-learn-more");
-    if (learnMore) {
-      learnMore.addEventListener("click", function (e) {
-        var faq = document.getElementById("faq");
-        if (faq) {
-          e.preventDefault();
-          faq.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      });
-    }
-
     syncUI();
   }
 
