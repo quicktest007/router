@@ -7,15 +7,17 @@
 
   var GALLERY_SRCS = [
     "./assets/CErouter1pack.png",
+    "./assets/routerathome.png",
+    "./assets/1packcoverage.png",
     "./assets/CErouter2pack.png",
-    "./assets/CErouter1pack.png",
-    "./assets/CErouter2pack.png"
+    "./assets/2packcoverage.png"
   ];
   var GALLERY_ALTS = [
     "Covenant Eyes Router — 1 Pack",
+    "Covenant Eyes Router at home",
+    "1-Pack coverage — up to 3,000 sqft",
     "Covenant Eyes Router — 2 Pack",
-    "Covenant Eyes Router — angle",
-    "Covenant Eyes Router — lifestyle"
+    "2-Pack coverage — up to 5,000 sqft"
   ];
   var CURRENT_INDEX_KEY = "gallery_index";
   var SAVINGS_2PACK = 99;
