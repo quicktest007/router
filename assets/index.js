@@ -13,7 +13,7 @@
     { src: "./assets/2packcoverage.png", alt: "2-Pack coverage — up to 5,000 sqft" }
   ];
 
-  var AUTO_ADVANCE_MS = 3000;
+  var AUTO_ADVANCE_MS = 5000;
   var PAUSE_AFTER_INTERACTION_MS = 8000;
   var FADE_DURATION_MS = 280;
 
