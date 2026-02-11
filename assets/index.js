@@ -116,6 +116,11 @@
     if (prevBtn) prevBtn.addEventListener("click", function () { setCurrent(current - 1); });
     if (nextBtn) nextBtn.addEventListener("click", function () { setCurrent(current + 1); });
     setCurrent(0);
+
+    var autoAdvanceMs = 5000;
+    var carouselTimer = setInterval(function () {
+      setCurrent(current + 1);
+    }, autoAdvanceMs);
   }
 
   function initPackSelector() {
