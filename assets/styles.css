@@ -298,7 +298,7 @@ a {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.05fr 0.95fr;
   gap: 3rem;
   align-items: center;
 }
@@ -310,9 +310,6 @@ a {
   .card__inner {
     grid-template-columns: 1fr;
     gap: 2rem;
-  }
-  .card__media {
-    order: -1;
   }
 }
 
