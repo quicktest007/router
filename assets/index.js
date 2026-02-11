@@ -79,7 +79,7 @@
     var s = getPackSelection();
     updatePrice(s.price);
     updateSavings(s.package);
-    updateProductImage(s.package);
+    /* Main image is driven only by the carousel so display always matches selected thumbnail. */
     try {
       localStorage.setItem("selected_package", s.package);
       localStorage.setItem("selected_price", s.price);
@@ -87,7 +87,6 @@
   }
 
   function initGallery() {
-    var main = document.getElementById("product-image");
     var thumbs = document.querySelectorAll(".gallery__thumb");
     var counter = document.getElementById("gallery-counter");
     var prevBtn = document.querySelector(".gallery__arrow--prev");
@@ -96,6 +95,7 @@
 
     function setCurrent(i) {
       current = (i + GALLERY_SRCS.length) % GALLERY_SRCS.length;
+      var main = document.getElementById("product-image");
       if (main) {
         main.setAttribute("src", GALLERY_SRCS[current]);
         main.setAttribute("alt", GALLERY_ALTS[current]);
@@ -115,6 +115,7 @@
     });
     if (prevBtn) prevBtn.addEventListener("click", function () { setCurrent(current - 1); });
     if (nextBtn) nextBtn.addEventListener("click", function () { setCurrent(current + 1); });
+    setCurrent(0);
   }
 
   function initPackSelector() {
