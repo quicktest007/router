@@ -118,7 +118,7 @@
     setCurrent(0);
 
     var autoAdvanceMs = 5000;
-    var carouselTimer = setInterval(function () {
+    setInterval(function () {
       setCurrent(current + 1);
     }, autoAdvanceMs);
   }
