@@ -24,10 +24,20 @@
     if (el) el.setAttribute("href", "checkout.html?package=" + encodeURIComponent(pkg));
   }
 
+  function updateProductImage(pkg) {
+    var img = document.getElementById("product-image");
+    if (!img) return;
+    var src = pkg === "2pack" ? "./assets/CErouter2pack.png" : "./assets/CErouter1pack.png";
+    var alt = pkg === "2pack" ? "Covenant Eyes Router — 2 Pack" : "Covenant Eyes Router — 1 Pack";
+    img.setAttribute("src", src);
+    img.setAttribute("alt", alt);
+  }
+
   function syncUI() {
     var s = getSelection();
     updatePrice(s.price);
     updateCheckoutHref(s.package);
+    updateProductImage(s.package);
   }
 
   function init() {

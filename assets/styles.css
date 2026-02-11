@@ -432,6 +432,17 @@ a {
 .card__image {
   width: 100%;
   height: auto;
+  display: block;
+}
+
+.card__image-caption {
+  font-size: 0.75rem;
+  color: var(--executive-blue);
+  opacity: 0.8;
+  text-align: center;
+  margin: 0.75rem 0 0;
+  padding: 0 0.5rem 0.5rem;
+  line-height: 1.4;
 }
 
 /* ----- Checkout page ----- */
