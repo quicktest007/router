@@ -131,25 +131,6 @@
     });
   }
 
-  function initHomeGuide() {
-    var tiles = document.querySelectorAll(".home-guide__tile");
-    var recEl = document.getElementById("home-recommendation");
-
-    tiles.forEach(function (tile) {
-      tile.addEventListener("click", function () {
-        tiles.forEach(function (t) { t.classList.remove("is-selected"); });
-        tile.classList.add("is-selected");
-        var profile = tile.getAttribute("data-profile");
-        var recommend = tile.getAttribute("data-recommend");
-        var rationale = tile.getAttribute("data-rationale");
-        setPackSelection(recommend);
-        syncFromPack();
-        if (recEl) recEl.textContent = "We recommend " + (recommend === "2pack" ? "2 Pack" : "1 Pack") + ". " + rationale;
-        if (typeof track === "function") track("select_home_profile", { profile: profile, recommended_pack: recommend });
-      });
-    });
-  }
-
   function initQty() {
     var minus = document.getElementById("qty-minus");
     var plus = document.getElementById("qty-plus");
@@ -190,7 +171,6 @@
 
     initGallery();
     initPackSelector();
-    initHomeGuide();
     initQty();
     initAddToCart();
 
