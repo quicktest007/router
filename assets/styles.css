@@ -298,6 +298,19 @@ a {
   display: none;
 }
 
+.checkout__back {
+  display: inline-block;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--executive-blue);
+  margin-bottom: 1rem;
+  transition: opacity 0.2s;
+}
+
+.checkout__back:hover {
+  opacity: 0.8;
+}
+
 .checkout__title {
   font-size: 1.5rem;
   font-weight: 700;
