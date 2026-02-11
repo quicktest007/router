@@ -26,51 +26,56 @@
     </div>
     <main class="card" aria-labelledby="product-title">
       <div class="card__inner">
-        <!-- Left: Product gallery -->
+        <!-- Left: Product gallery (vertical thumbnails + main image) -->
         <div class="card__media">
           <div class="gallery">
-            <div class="gallery__thumbnails" role="tablist" aria-label="Product image gallery">
-              <button type="button" class="gallery__thumb is-active" data-index="0" aria-label="View image 1" aria-selected="true"><img src="./assets/CErouter1pack.png" alt=""></button>
-              <button type="button" class="gallery__thumb" data-index="1" aria-label="View image 2" aria-selected="false"><img src="./assets/CErouter2pack.png" alt=""></button>
-              <button type="button" class="gallery__thumb" data-index="2" aria-label="View image 3" aria-selected="false"><img src="./assets/CErouter1pack.png" alt=""></button>
-              <button type="button" class="gallery__thumb" data-index="3" aria-label="View image 4" aria-selected="false"><img src="./assets/CErouter2pack.png" alt=""></button>
+            <div class="gallery__thumb-col">
+              <div class="gallery__thumbnails" role="tablist" aria-label="Product image gallery">
+                <button type="button" class="gallery__thumb is-active" data-index="0" aria-label="View image 1" aria-selected="true"><img src="./assets/CErouter1pack.png" alt=""></button>
+                <button type="button" class="gallery__thumb" data-index="1" aria-label="View image 2" aria-selected="false"><img src="./assets/CErouter2pack.png" alt=""></button>
+                <button type="button" class="gallery__thumb" data-index="2" aria-label="View image 3" aria-selected="false"><img src="./assets/CErouter1pack.png" alt=""></button>
+                <button type="button" class="gallery__thumb" data-index="3" aria-label="View image 4" aria-selected="false"><img src="./assets/CErouter2pack.png" alt=""></button>
+              </div>
+              <div class="gallery__nav">
+                <button type="button" class="gallery__arrow gallery__arrow--prev" aria-label="Previous image">‹</button>
+                <span class="gallery__counter" id="gallery-counter">1 / 4</span>
+                <button type="button" class="gallery__arrow gallery__arrow--next" aria-label="Next image">›</button>
+              </div>
             </div>
-            <div class="gallery__main-wrap">
-              <img class="gallery__main" id="product-image" src="./assets/CErouter1pack.png" alt="Covenant Eyes Router — 1 Pack" width="320" height="auto">
+            <div class="gallery__main-col">
+              <div class="gallery__main-wrap">
+                <div class="gallery__main-bg"></div>
+                <img class="gallery__main" id="product-image" src="./assets/CErouter1pack.png" alt="Covenant Eyes Router — 1 Pack" width="320" height="auto">
+              </div>
+              <p class="gallery__caption">Concept art. Beta Program visuals — final design may vary.</p>
             </div>
-            <div class="gallery__nav">
-              <button type="button" class="gallery__arrow gallery__arrow--prev" aria-label="Previous image">‹</button>
-              <span class="gallery__counter" id="gallery-counter">1 / 4</span>
-              <button type="button" class="gallery__arrow gallery__arrow--next" aria-label="Next image">›</button>
-            </div>
-            <p class="gallery__caption">Concept art. Beta Program visuals — final design may vary.</p>
           </div>
         </div>
 
         <!-- Right: Product details + checkout options -->
         <div class="card__content">
+          <p class="card__badge">Beta Program</p>
+          <p class="card__subhead">Next-generation WiFi 6</p>
           <h1 id="product-title" class="card__title">Covenant Eyes Router</h1>
 
-          <div class="pack-selector" role="group" aria-label="Package selection">
-            <button type="button" class="pack-selector__btn is-selected" data-package="1pack" data-price="299.00" aria-pressed="true">1 PACK</button>
-            <button type="button" class="pack-selector__btn" data-package="2pack" data-price="499.00" aria-pressed="false">2 PACK</button>
-          </div>
-
-          <p class="card__description">Whole-home WiFi protection and performance powered by next-generation WiFi 6 technology.</p>
-
-          <ul class="card__list">
+          <ul class="card__list card__list--above-pack">
             <li>Our fastest model yet (up to 40% boost in performance)</li>
             <li>WiFi coverage for homes 2,000 sqft and up</li>
             <li>Supports even the busiest WiFi traffic and lots of connected&nbsp;devices</li>
             <li>Maximize the internet speeds of your WiFi 6 devices</li>
           </ul>
 
+          <div class="pack-selector" role="group" aria-label="Package selection">
+            <button type="button" class="pack-selector__btn is-selected" data-package="1pack" data-price="299.00" aria-pressed="true">1 PACK</button>
+            <button type="button" class="pack-selector__btn" data-package="2pack" data-price="499.00" aria-pressed="false">2 PACK</button>
+          </div>
+
           <p class="card__price-label">Online price</p>
           <p class="card__price" id="dynamic-price" aria-live="polite">$299.00</p>
           <p class="card__savings" id="savings-line">You save $0 (standard pricing)</p>
           <p class="card__beta-note">Beta Program pricing — limited availability</p>
 
-          <p class="card__shipping">FREE US Shipping · 90-Day Satisfaction Guarantee</p>
+          <p class="card__shipping">FREE US Shipping · 90-Days Satisfaction Guarantee</p>
 
           <!-- Choose best for your home -->
           <section class="home-guide" aria-labelledby="home-guide-title">
