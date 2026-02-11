@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Your Reservation – Covenant Eyes Router</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <main class="checkout-page">
+    <h1 class="checkout__title">Complete Your Reservation</h1>
+
+    <div id="checkout-summary" class="checkout__summary">
+      <p class="checkout__summary-title">Your selection</p>
+      <p class="checkout__summary-detail" id="summary-text">—</p>
+    </div>
+
+    <div id="checkout-form-container" class="checkout__form-container">
+      <form id="checkout-form" class="checkout__form-wrap" novalidate>
+        <div class="checkout__form-group">
+          <label class="checkout__label" for="email">Email address</label>
+          <input type="email" id="email" class="checkout__input" name="email" required placeholder="you@example.com" autocomplete="email">
+          <p id="email-error" class="checkout__error" role="alert" aria-live="polite" style="display: none;"></p>
+        </div>
+        <button type="submit" class="checkout__submit">Complete Checkout</button>
+        <p class="checkout__microcopy">No payment will be collected during this pilot. We are validating interest in the Covenant Eyes Router.</p>
+      </form>
+    </div>
+
+    <div id="checkout-success" class="checkout__success" aria-live="polite">
+      <h2 class="checkout__success-title">You're on the list.</h2>
+      <p class="checkout__success-text">We'll notify you as soon as the Covenant Eyes Router becomes available.</p>
+      <a href="index.html" class="checkout__success-link">Back to product</a>
+    </div>
+  </main>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/app.js"></script>
+  <script src="assets/checkout.js"></script>
+</body>
+</html>
