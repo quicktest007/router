@@ -108,19 +108,30 @@
       if (typeof track === "function") track("click_thumbnail", { index: current });
     }
 
+    function goNext() {
+      setCurrent(current + 1);
+    }
+
     thumbs.forEach(function (thumb, idx) {
       thumb.addEventListener("click", function () {
         setCurrent(idx);
+        resetAutoAdvance();
       });
     });
-    if (prevBtn) prevBtn.addEventListener("click", function () { setCurrent(current - 1); });
-    if (nextBtn) nextBtn.addEventListener("click", function () { setCurrent(current + 1); });
+    if (prevBtn) prevBtn.addEventListener("click", function () { setCurrent(current - 1); resetAutoAdvance(); });
+    if (nextBtn) nextBtn.addEventListener("click", function () { setCurrent(current + 1); resetAutoAdvance(); });
     setCurrent(0);
 
-    var autoAdvanceMs = 5000;
-    setInterval(function () {
-      setCurrent(current + 1);
-    }, autoAdvanceMs);
+    var autoAdvanceMs = 4500;
+    var autoAdvanceId;
+    function startAutoAdvance() {
+      autoAdvanceId = setInterval(goNext, autoAdvanceMs);
+    }
+    function resetAutoAdvance() {
+      if (autoAdvanceId) clearInterval(autoAdvanceId);
+      startAutoAdvance();
+    }
+    startAutoAdvance();
   }
 
   function initPackSelector() {
