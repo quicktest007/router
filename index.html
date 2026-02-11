@@ -26,7 +26,28 @@
     </div>
     <main class="card" aria-labelledby="product-title">
       <div class="card__inner">
-        <!-- Left: Product details + options -->
+        <!-- Left: Product gallery -->
+        <div class="card__media">
+          <div class="gallery">
+            <div class="gallery__thumbnails" role="tablist" aria-label="Product image gallery">
+              <button type="button" class="gallery__thumb is-active" data-index="0" aria-label="View image 1" aria-selected="true"><img src="./assets/CErouter1pack.png" alt=""></button>
+              <button type="button" class="gallery__thumb" data-index="1" aria-label="View image 2" aria-selected="false"><img src="./assets/CErouter2pack.png" alt=""></button>
+              <button type="button" class="gallery__thumb" data-index="2" aria-label="View image 3" aria-selected="false"><img src="./assets/CErouter1pack.png" alt=""></button>
+              <button type="button" class="gallery__thumb" data-index="3" aria-label="View image 4" aria-selected="false"><img src="./assets/CErouter2pack.png" alt=""></button>
+            </div>
+            <div class="gallery__main-wrap">
+              <img class="gallery__main" id="product-image" src="./assets/CErouter1pack.png" alt="Covenant Eyes Router — 1 Pack" width="320" height="auto">
+            </div>
+            <div class="gallery__nav">
+              <button type="button" class="gallery__arrow gallery__arrow--prev" aria-label="Previous image">‹</button>
+              <span class="gallery__counter" id="gallery-counter">1 / 4</span>
+              <button type="button" class="gallery__arrow gallery__arrow--next" aria-label="Next image">›</button>
+            </div>
+            <p class="gallery__caption">Concept art. Beta Program visuals — final design may vary.</p>
+          </div>
+        </div>
+
+        <!-- Right: Product details + checkout options -->
         <div class="card__content">
           <h1 id="product-title" class="card__title">Covenant Eyes Router</h1>
 
@@ -91,27 +112,6 @@
             </button>
           </div>
           <p class="card__disclaimer">No payment collected in Beta Program.</p>
-        </div>
-
-        <!-- Right: Product gallery -->
-        <div class="card__media">
-          <div class="gallery">
-            <div class="gallery__thumbnails" role="tablist" aria-label="Product image gallery">
-              <button type="button" class="gallery__thumb is-active" data-index="0" aria-label="View image 1" aria-selected="true"><img src="./assets/CErouter1pack.png" alt=""></button>
-              <button type="button" class="gallery__thumb" data-index="1" aria-label="View image 2" aria-selected="false"><img src="./assets/CErouter2pack.png" alt=""></button>
-              <button type="button" class="gallery__thumb" data-index="2" aria-label="View image 3" aria-selected="false"><img src="./assets/CErouter1pack.png" alt=""></button>
-              <button type="button" class="gallery__thumb" data-index="3" aria-label="View image 4" aria-selected="false"><img src="./assets/CErouter2pack.png" alt=""></button>
-            </div>
-            <div class="gallery__main-wrap">
-              <img class="gallery__main" id="product-image" src="./assets/CErouter1pack.png" alt="Covenant Eyes Router — 1 Pack" width="320" height="auto">
-            </div>
-            <div class="gallery__nav">
-              <button type="button" class="gallery__arrow gallery__arrow--prev" aria-label="Previous image">‹</button>
-              <span class="gallery__counter" id="gallery-counter">1 / 4</span>
-              <button type="button" class="gallery__arrow gallery__arrow--next" aria-label="Next image">›</button>
-            </div>
-            <p class="gallery__caption">Concept art. Beta Program visuals — final design may vary.</p>
-          </div>
         </div>
       </div>
     </main>
