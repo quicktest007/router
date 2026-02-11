@@ -122,6 +122,23 @@ a {
   opacity: 0.95;
 }
 
+.footer__links {
+  margin: 1rem 0 0;
+  font-size: 0.8125rem;
+}
+
+.footer__link {
+  color: var(--white);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 0.95;
+  transition: opacity 0.2s;
+}
+
+.footer__link:hover {
+  opacity: 1;
+}
+
 .footer__accent {
   position: absolute;
   width: 180px;
@@ -608,5 +625,73 @@ a {
 
 .checkout__form-block.is-hidden {
   display: none;
+}
+
+/* ----- Privacy Policy page ----- */
+.policy-page {
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.policy-page .page-shapes {
+  display: none;
+}
+
+.policy {
+  max-width: 680px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.policy__title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--executive-blue);
+  letter-spacing: -0.02em;
+  margin: 0 0 0.25rem;
+}
+
+.policy__updated {
+  font-size: 0.875rem;
+  color: var(--executive-blue);
+  opacity: 0.8;
+  margin: 0 0 2rem;
+}
+
+.policy__section {
+  margin-bottom: 2rem;
+}
+
+.policy__heading {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--executive-blue);
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid rgba(0, 46, 112, 0.15);
+}
+
+.policy__subheading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--executive-blue);
+  margin: 1.25rem 0 0.5rem;
+}
+
+.policy__section p,
+.policy__section ul {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--executive-blue);
+  margin: 0 0 0.75rem;
+}
+
+.policy__section ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.policy__section li {
+  margin-bottom: 0.35rem;
 }
 
