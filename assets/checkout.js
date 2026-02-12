@@ -77,6 +77,18 @@
     if (successEl) successEl.classList.remove("is-visible");
   }
 
+  var AIRTABLE_FORM_BASE = "https://airtable.com/embed/app8UV0RBo7wvJy7G/pagKOCvwDdnEpCyel/form";
+
+  function setAirtableFormPrefill(selection) {
+    var iframe = document.getElementById("checkout-airtable-form");
+    if (!iframe) return;
+    var fieldName = (typeof AIRTABLE_PACKAGE_FIELD !== "undefined" && AIRTABLE_PACKAGE_FIELD) ? AIRTABLE_PACKAGE_FIELD : "Package";
+    var value = selection.package === "1pack" ? "1 Pack" : "2 Pack";
+    var encodedField = encodeURIComponent(fieldName).replace(/%20/g, "+");
+    var encodedValue = encodeURIComponent(value);
+    iframe.src = AIRTABLE_FORM_BASE + "?prefill_" + encodedField + "=" + encodedValue;
+  }
+
   function showCheckoutWithSelection(selection) {
     var emptyEl = document.getElementById("checkout-empty");
     var summaryContainer = document.getElementById("checkout-summary-container");
@@ -87,6 +99,7 @@
       summaryContainer.classList.remove("is-hidden");
       renderSummary(selection, summaryContainer);
     }
+    setAirtableFormPrefill(selection);
     if (formBlock) formBlock.classList.remove("is-hidden");
     if (successEl) successEl.classList.remove("is-visible");
   }
