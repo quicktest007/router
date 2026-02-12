@@ -1138,16 +1138,4 @@ a {
   opacity: 0.9;
 }
 
-@media (max-width: 600px) {
-  .footer__inner {
-    flex-direction: column;
-  }
-  .footer__copy {
-    max-width: 100%;
-  }
-  .footer__links {
-    margin-left: 0;
-    align-self: flex-start;
-  }
-}
 
