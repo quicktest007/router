@@ -51,9 +51,9 @@ Open or serve the site from the **project root** (the folder that contains both 
 4. Choose **Branch**: `main` (or your default), **Folder**: `/ (root)`.
 5. Click **Save**. The site will be at `https://<username>.github.io/<repo-name>/`
 
-## Leads
+## Checkout
 
-On checkout submit (“Place order”), the lead (email, package, qty, total, savings, UTM) is stored in `localStorage` and sent to the Worker URL in `assets/config.js` (for Airtable).
+When a product is selected, the checkout page shows an order summary and an embedded Airtable form. Submissions are handled by Airtable.
 
 ## Tracking events
 
@@ -63,9 +63,7 @@ Stored in `localStorage` under the key `events` (and logged to the console):
 - **select_pack** – User selects 1 PACK or 2 PACK
 - **click_thumbnail** – User changes gallery image
 - **add_to_cart** – User clicks Add to cart (package, price, qty, savings)
-- **submit_email** – User submits email on checkout
-
-UTM params are captured on load and stored in `localStorage`; they are included in the lead payload on checkout.
+UTM params are captured on load and stored in `localStorage`.
 
 ## Brand colors
 

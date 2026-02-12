@@ -43,23 +43,14 @@
 
           <div id="checkout-summary-container" class="is-hidden"></div>
 
-          <div id="checkout-form-block" class="checkout__form-block">
-            <form id="checkout-form" class="checkout__form" novalidate>
-              <div class="checkout__form-group">
-                <label class="checkout__label" for="email">Email address</label>
-                <input type="email" id="email" class="checkout__input" name="email" required placeholder="you@example.com" autocomplete="email">
-                <p id="email-error" class="checkout__error" role="alert" aria-live="polite" style="display: none;"></p>
-              </div>
-              <button type="submit" class="checkout__submit">Place order</button>
-              <p class="checkout__microcopy">Secure checkout. Your payment information is protected.</p>
-            </form>
-          </div>
-
-          <div id="checkout-success" class="checkout__success" aria-live="polite">
-            <p class="checkout__success-icon" aria-hidden="true">✓</p>
-            <h2 class="checkout__success-title">Thank you! You're in!</h2>
-            <p class="checkout__success-text">You have now secured early access to the Covenant Eyes Router. We'll follow up with you.</p>
-            <a href="index.html" class="checkout__success-link">Back to product</a>
+          <div id="checkout-form-block" class="checkout__form-block checkout__airtable-wrap">
+            <iframe
+              class="airtable-embed"
+              src="https://airtable.com/embed/app8UV0RBo7wvJy7G/pagKOCvwDdnEpCyel/form"
+              frameborder="0"
+              width="100%"
+              height="533"
+              title="Checkout form"></iframe>
           </div>
         </div>
       </div>

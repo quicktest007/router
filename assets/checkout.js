@@ -1,11 +1,9 @@
 /**
- * Covenant Eyes Router – Checkout: summary (pack, qty, total, savings), email, lead
+ * Covenant Eyes Router – Checkout: summary (pack, qty, total, savings), Airtable form embed
  */
 
 (function () {
   "use strict";
-
-  var LEADS_KEY = "leads";
 
   function getQueryParam(name) {
     var params = new URLSearchParams(window.location.search);
@@ -65,78 +63,16 @@
     container.appendChild(summary);
   }
 
-  function validateEmail(value) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((value || "").trim());
-  }
-
-  function showError(msg) {
-    var err = document.getElementById("email-error");
-    var input = document.getElementById("email");
-    if (err) {
-      err.textContent = msg || "";
-      err.style.display = msg ? "block" : "none";
-    }
-    if (input) input.classList.toggle("error", !!msg);
-  }
-
-  function getLeads() {
-    try {
-      var raw = localStorage.getItem(LEADS_KEY);
-      return raw ? JSON.parse(raw) : [];
-    } catch (e) {
-      return [];
-    }
-  }
-
-  function saveLead(lead) {
-    var list = getLeads();
-    list.push(lead);
-    try {
-      localStorage.setItem(LEADS_KEY, JSON.stringify(list));
-    } catch (e) {
-      if (console && console.warn) console.warn("saveLead failed", e);
-    }
-  }
-
-  function buildLead(email, selection) {
-    var utm = typeof getStoredUTM === "function" ? getStoredUTM() : {};
-    return {
-      email: email,
-      selected_package: selection.package,
-      price: selection.price,
-      qty: selection.qty,
-      savings: selection.savings,
-      total: (parseFloat(selection.price, 10) * selection.qty).toFixed(2),
-      timestamp: new Date().toISOString(),
-      referrer: utm.referrer || (typeof document !== "undefined" && document.referrer) || null,
-      user_agent: typeof navigator !== "undefined" && navigator.userAgent ? navigator.userAgent : null,
-      utm_source: utm.utm_source || null,
-      utm_medium: utm.utm_medium || null,
-      utm_campaign: utm.utm_campaign || null,
-      utm_content: utm.utm_content || null,
-      utm_term: utm.utm_term || null
-    };
-  }
-
-  function showSuccess() {
-    var formBlock = document.getElementById("checkout-form-block");
-    var successEl = document.getElementById("checkout-success");
-    if (formBlock) formBlock.classList.add("is-hidden");
-    if (successEl) successEl.classList.add("is-visible");
-  }
-
   function showEmptyCart() {
     var emptyEl = document.getElementById("checkout-empty");
     var summaryContainer = document.getElementById("checkout-summary-container");
     var formBlock = document.getElementById("checkout-form-block");
-    var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.add("is-visible");
     if (summaryContainer) {
       summaryContainer.innerHTML = "";
       summaryContainer.classList.add("is-hidden");
     }
     if (formBlock) formBlock.classList.add("is-hidden");
-    if (successEl) successEl.classList.remove("is-visible");
   }
 
   function showCheckoutWithSelection(selection) {
@@ -157,51 +93,7 @@
       showEmptyCart();
       return;
     }
-
     showCheckoutWithSelection(selection);
-
-    var form = document.getElementById("checkout-form");
-    var emailInput = document.getElementById("email");
-
-    if (form) {
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        var email = (emailInput && emailInput.value) ? emailInput.value.trim() : "";
-        showError("");
-
-        if (!email) {
-          showError("Please enter your email address.");
-          if (emailInput) emailInput.focus();
-          return;
-        }
-        if (!validateEmail(email)) {
-          showError("Please enter a valid email address.");
-          if (emailInput) emailInput.focus();
-          return;
-        }
-
-        if (typeof track === "function") {
-          track("submit_email", {
-            email: email,
-            package: selection.package,
-            price: selection.price,
-            qty: selection.qty,
-            savings: selection.savings
-          });
-        }
-
-        var lead = buildLead(email, selection);
-        saveLead(lead);
-
-        if (typeof submitLead === "function") {
-          submitLead(lead).then(showSuccess).catch(function () {
-            showSuccess();
-          });
-        } else {
-          showSuccess();
-        }
-      });
-    }
   }
 
   if (document.readyState === "loading") {

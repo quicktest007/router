@@ -1128,6 +1128,19 @@ a {
   display: none;
 }
 
+.checkout__airtable-wrap {
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.checkout__airtable-wrap .airtable-embed {
+  display: block;
+  background: transparent;
+}
+
 /* ----- Privacy Policy page ----- */
 .policy-page {
   padding: 2.5rem 1.5rem 4rem;
