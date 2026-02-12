@@ -58,7 +58,8 @@
       "<p class=\"checkout-summary__total\">Total: $" + total + " USD</p>" +
       (selection.savings > 0
         ? "<p class=\"checkout-summary__savings\">You save $" + selection.savings + " (vs. buying two 1-packs)</p>"
-        : "");
+        : "") +
+      "<p class=\"checkout-summary__note\">Summary reflects your selection from the product page. If you change the option in the form below, your submission will use the form choice.</p>";
     container.innerHTML = "";
     container.appendChild(summary);
   }
