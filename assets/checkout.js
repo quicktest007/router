@@ -211,7 +211,14 @@
         var lead = buildLead(email, selection);
         saveLead(lead);
         sendWebhook(lead, function () {});
-        showSuccess();
+
+        if (typeof submitLead === "function") {
+          submitLead(lead).then(showSuccess).catch(function () {
+            showSuccess();
+          });
+        } else {
+          showSuccess();
+        }
       });
     }
   }
