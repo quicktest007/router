@@ -1128,12 +1128,27 @@ a {
   display: none;
 }
 
+.checkout__form-intro {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--executive-blue);
+  margin: 0 0 0.25rem;
+}
+
+.checkout__form-load-note {
+  font-size: 0.875rem;
+  color: var(--executive-blue);
+  opacity: 0.85;
+  margin: 0 0 1rem;
+}
+
 .checkout__airtable-wrap {
   background: transparent;
   border: 1px solid #ccc;
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem 0;
 }
 
 .checkout__airtable-wrap .airtable-embed {
