@@ -872,7 +872,8 @@ a {
 }
 
 .checkout-page .card {
-  max-width: 760px;
+  max-width: 1400px;
+  width: 94%;
   margin: 0 auto;
   padding: 2.75rem 2.25rem;
 }
