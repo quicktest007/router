@@ -66,6 +66,7 @@
   function showEmptyCart() {
     var emptyEl = document.getElementById("checkout-empty");
     var summaryContainer = document.getElementById("checkout-summary-container");
+    var instructionBlock = document.getElementById("checkout-instruction-block");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.add("is-visible");
@@ -73,6 +74,7 @@
       summaryContainer.innerHTML = "";
       summaryContainer.classList.add("is-hidden");
     }
+    if (instructionBlock) instructionBlock.classList.add("is-hidden");
     if (formBlock) formBlock.classList.add("is-hidden");
     if (successEl) successEl.classList.remove("is-visible");
   }
@@ -92,6 +94,7 @@
   function showCheckoutWithSelection(selection) {
     var emptyEl = document.getElementById("checkout-empty");
     var summaryContainer = document.getElementById("checkout-summary-container");
+    var instructionBlock = document.getElementById("checkout-instruction-block");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.remove("is-visible");
@@ -99,6 +102,7 @@
       summaryContainer.classList.remove("is-hidden");
       renderSummary(selection, summaryContainer);
     }
+    if (instructionBlock) instructionBlock.classList.remove("is-hidden");
     setAirtableFormPrefill(selection);
     if (formBlock) formBlock.classList.remove("is-hidden");
     if (successEl) successEl.classList.remove("is-visible");
@@ -107,10 +111,12 @@
   function showSuccessView() {
     var emptyEl = document.getElementById("checkout-empty");
     var summaryContainer = document.getElementById("checkout-summary-container");
+    var instructionBlock = document.getElementById("checkout-instruction-block");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.remove("is-visible");
     if (summaryContainer) summaryContainer.classList.add("is-hidden");
+    if (instructionBlock) instructionBlock.classList.add("is-hidden");
     if (formBlock) formBlock.classList.add("is-hidden");
     if (successEl) successEl.classList.add("is-visible");
   }
