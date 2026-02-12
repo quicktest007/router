@@ -91,12 +91,13 @@
               <input type="number" class="qty-selector__input" id="qty-input" value="0" min="0" max="99" aria-label="Quantity" readonly>
               <button type="button" class="qty-selector__btn" id="qty-plus" aria-label="Increase quantity">+</button>
             </div>
-            <button type="button" class="cta-bar__add-cart" id="btn-add-cart" disabled>
+            <button type="button" class="cta-bar__add-cart" id="btn-add-cart">
               <span class="cta-bar__cart-icon" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
               </span>
               Add to cart
             </button>
+            <p id="add-to-cart-error" class="cta-bar__error" role="alert" aria-live="polite" style="display: none;"></p>
           </div>
           <p class="card__disclaimer">Secure checkout. Your payment information is protected.</p>
         </div>

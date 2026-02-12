@@ -220,9 +220,24 @@
     });
   }
 
-  function setAddToCartDisabled(disabled) {
+  function clearAddToCartError() {
     var btn = document.getElementById("btn-add-cart");
-    if (btn) btn.disabled = disabled;
+    var err = document.getElementById("add-to-cart-error");
+    if (btn) btn.classList.remove("cta-bar__add-cart--error");
+    if (err) {
+      err.textContent = "";
+      err.style.display = "none";
+    }
+  }
+
+  function showAddToCartError() {
+    var btn = document.getElementById("btn-add-cart");
+    var err = document.getElementById("add-to-cart-error");
+    if (btn) btn.classList.add("cta-bar__add-cart--error");
+    if (err) {
+      err.textContent = "Please add at least one item to your cart.";
+      err.style.display = "block";
+    }
   }
 
   function initQty() {
@@ -235,13 +250,12 @@
     if (!isNaN(saved) && saved >= 0 && saved <= 99) {
       input.value = String(saved);
     }
-    setAddToCartDisabled(getQty() < 1);
     if (typeof updateHeaderCartCount === "function") updateHeaderCartCount();
 
     function setQty(n) {
       n = Math.max(0, Math.min(99, n));
       input.value = String(n);
-      setAddToCartDisabled(n < 1);
+      if (n >= 1) clearAddToCartError();
       try {
         localStorage.setItem("selected_qty", String(n));
         if (typeof updateHeaderCartCount === "function") updateHeaderCartCount();
@@ -257,7 +271,11 @@
     if (!btn) return;
     btn.addEventListener("click", function () {
       var qty = getQty();
-      if (qty < 1) return;
+      if (qty < 1) {
+        showAddToCartError();
+        return;
+      }
+      clearAddToCartError();
       var s = getPackSelection();
       var savings = getSavings(s.package);
       if (typeof track === "function") track("add_to_cart", { package: s.package, price: s.price, qty: qty, savings: savings });

@@ -825,6 +825,20 @@ a {
   outline: none;
 }
 
+.cta-bar__add-cart--error {
+  outline: 2px solid #c00;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(204, 0, 0, 0.2);
+}
+
+.cta-bar__error {
+  width: 100%;
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  color: #c00;
+  font-weight: 500;
+}
+
 .cta-bar__cart-icon {
   display: inline-flex;
 }
