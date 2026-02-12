@@ -63,9 +63,9 @@
 
   function getQty() {
     var input = document.getElementById("qty-input");
-    if (!input) return 1;
+    if (!input) return 0;
     var n = parseInt(input.value, 10);
-    return isNaN(n) || n < 1 ? 1 : Math.min(99, n);
+    return isNaN(n) || n < 0 ? 0 : Math.min(99, n);
   }
 
   function getSavings(pkg) {
@@ -220,6 +220,11 @@
     });
   }
 
+  function setAddToCartDisabled(disabled) {
+    var btn = document.getElementById("btn-add-cart");
+    if (btn) btn.disabled = disabled;
+  }
+
   function initQty() {
     var minus = document.getElementById("qty-minus");
     var plus = document.getElementById("qty-plus");
@@ -227,14 +232,16 @@
     if (!input) return;
 
     var saved = parseInt(localStorage.getItem("selected_qty"), 10);
-    if (!isNaN(saved) && saved >= 1 && saved <= 99) {
+    if (!isNaN(saved) && saved >= 0 && saved <= 99) {
       input.value = String(saved);
-      if (typeof updateHeaderCartCount === "function") updateHeaderCartCount();
     }
+    setAddToCartDisabled(getQty() < 1);
+    if (typeof updateHeaderCartCount === "function") updateHeaderCartCount();
 
     function setQty(n) {
-      n = Math.max(1, Math.min(99, n));
+      n = Math.max(0, Math.min(99, n));
       input.value = String(n);
+      setAddToCartDisabled(n < 1);
       try {
         localStorage.setItem("selected_qty", String(n));
         if (typeof updateHeaderCartCount === "function") updateHeaderCartCount();
@@ -249,8 +256,9 @@
     var btn = document.getElementById("btn-add-cart");
     if (!btn) return;
     btn.addEventListener("click", function () {
-      var s = getPackSelection();
       var qty = getQty();
+      if (qty < 1) return;
+      var s = getPackSelection();
       var savings = getSavings(s.package);
       if (typeof track === "function") track("add_to_cart", { package: s.package, price: s.price, qty: qty, savings: savings });
       try {
