@@ -246,10 +246,10 @@
     var input = document.getElementById("qty-input");
     if (!input) return;
 
-    var saved = parseInt(localStorage.getItem("selected_qty"), 10);
-    if (!isNaN(saved) && saved >= 0 && saved <= 99) {
-      input.value = String(saved);
-    }
+    input.value = "0";
+    try {
+      localStorage.setItem("selected_qty", "0");
+    } catch (e) {}
     if (typeof updateHeaderCartCount === "function") updateHeaderCartCount();
 
     function setQty(n) {
