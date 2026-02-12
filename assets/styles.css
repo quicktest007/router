@@ -862,12 +862,13 @@ a {
 
 /* ----- Checkout page ----- */
 .checkout-page .page {
-  padding: 2rem 1rem;
+  padding: 2rem 1.5rem;
 }
 
 .checkout-page .card {
-  max-width: 480px;
+  max-width: 640px;
   margin: 0 auto;
+  padding: 2.5rem 2rem;
 }
 
 .checkout-page .card__inner {
