@@ -1012,6 +1012,9 @@ a {
 
 .checkout__success.is-visible {
   display: block;
+  outline: 3px solid #16a34a;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px rgba(22, 163, 74, 0.25);
 }
 
 .checkout__success-title {
