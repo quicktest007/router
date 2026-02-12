@@ -74,9 +74,9 @@ a {
 
 .header__logo {
   display: block;
-  height: 64px;
+  height: 80px;
   width: auto;
-  max-width: 320px;
+  max-width: 400px;
   object-fit: contain;
   object-position: left center;
 }
@@ -127,7 +127,7 @@ a {
     padding: 0.875rem 1rem;
   }
   .header__logo {
-    height: 52px;
+    height: 64px;
   }
 }
 
