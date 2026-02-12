@@ -899,7 +899,8 @@ a {
   text-align: center;
 }
 
-.checkout__empty {
+/* Empty cart state – shown only when no package selected */
+.empty-cart {
   display: none;
   background: var(--white);
   border-radius: 12px;
@@ -908,47 +909,56 @@ a {
   text-align: center;
 }
 
-.checkout__empty.is-visible {
+.empty-cart.is-visible {
   display: block;
 }
 
-.checkout__empty-message {
+.empty-cart h2 {
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--executive-blue);
   margin: 0 0 0.5rem;
 }
 
-.checkout__empty-hint {
+.empty-cart p {
   font-size: 0.9375rem;
   color: var(--executive-blue);
   margin: 0 0 1rem;
   opacity: 0.9;
 }
 
-.checkout__empty-link {
+.empty-cart .btn-primary {
   display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: var(--hero-blue);
-  text-decoration: underline;
+  font-family: inherit;
+  color: var(--white);
+  background: var(--hero-blue);
+  border: none;
+  border-radius: 12px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
-.checkout__empty-link:hover {
+.empty-cart .btn-primary:hover {
   opacity: 0.9;
 }
 
-.checkout__summary {
+#checkout-summary-container.is-hidden {
+  display: none;
+}
+
+/* Dynamically rendered summary (only when selection exists) */
+.checkout-summary {
   background: var(--white);
   border-radius: 12px;
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
 }
 
-.checkout__summary.is-hidden {
-  display: none;
-}
-
-.checkout__summary-label {
+.checkout-summary__label {
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--executive-blue);
@@ -957,21 +967,21 @@ a {
   margin: 0 0 0.25rem;
 }
 
-.checkout__summary-value {
+.checkout-summary__value {
   font-size: 1.125rem;
   font-weight: 700;
   color: var(--hero-blue);
   margin: 0 0 0.25rem;
 }
 
-.checkout__summary-qty,
-.checkout__summary-total {
+.checkout-summary__qty,
+.checkout-summary__total {
   font-size: 0.9375rem;
   color: var(--executive-blue);
   margin: 0 0 0.25rem;
 }
 
-.checkout__summary-savings {
+.checkout-summary__savings {
   font-size: 0.9375rem;
   color: var(--hero-blue);
   font-weight: 600;

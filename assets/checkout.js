@@ -17,7 +17,7 @@
     var pkg = (q === "1pack" || q === "2pack") ? q : null;
     if (!pkg) {
       try {
-        pkg = localStorage.getItem("selected_package");
+        pkg = localStorage.getItem("selectedPackage") || localStorage.getItem("selected_package");
         if (pkg !== "1pack" && pkg !== "2pack") pkg = null;
       } catch (e) {}
     }
@@ -45,33 +45,24 @@
     return { package: pkg, price: price, qty: qty, savings: savings };
   }
 
-  function redirectToIndex() {
-    window.location.replace("index.html");
-  }
-
-  function setSummary(selection) {
+  function renderSummary(selection, container) {
+    if (!container) return;
     var label = selection.package === "1pack" ? "1 Pack" : "2 Pack";
     var unitPrice = parseFloat(selection.price, 10);
     var total = (unitPrice * selection.qty).toFixed(2);
 
-    var valEl = document.getElementById("summary-value");
-    if (valEl) valEl.textContent = label + " — $" + selection.price + " each";
-
-    var qtyEl = document.getElementById("summary-qty");
-    if (qtyEl) qtyEl.textContent = "Quantity: " + selection.qty;
-
-    var totalEl = document.getElementById("summary-total");
-    if (totalEl) totalEl.textContent = "Total: $" + total + " USD";
-
-    var savEl = document.getElementById("summary-savings");
-    if (savEl) {
-      if (selection.savings > 0) {
-        savEl.textContent = "You save $" + selection.savings + " (vs. buying two 1-packs)";
-        savEl.style.display = "block";
-      } else {
-        savEl.style.display = "none";
-      }
-    }
+    var summary = document.createElement("div");
+    summary.className = "checkout-summary";
+    summary.innerHTML =
+      "<p class=\"checkout-summary__label\">Your selection</p>" +
+      "<p class=\"checkout-summary__value\">" + label + " — $" + selection.price + " each</p>" +
+      "<p class=\"checkout-summary__qty\">Quantity: " + selection.qty + "</p>" +
+      "<p class=\"checkout-summary__total\">Total: $" + total + " USD</p>" +
+      (selection.savings > 0
+        ? "<p class=\"checkout-summary__savings\">You save $" + selection.savings + " (vs. buying two 1-packs)</p>"
+        : "");
+    container.innerHTML = "";
+    container.appendChild(summary);
   }
 
   function validateEmail(value) {
@@ -154,13 +145,28 @@
 
   function showEmptyCart() {
     var emptyEl = document.getElementById("checkout-empty");
-    var summaryEl = document.getElementById("checkout-summary");
+    var summaryContainer = document.getElementById("checkout-summary-container");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.add("is-visible");
-    if (summaryEl) summaryEl.classList.add("is-hidden");
+    if (summaryContainer) {
+      summaryContainer.innerHTML = "";
+      summaryContainer.classList.add("is-hidden");
+    }
     if (formBlock) formBlock.classList.add("is-hidden");
     if (successEl) successEl.classList.remove("is-visible");
+  }
+
+  function showCheckoutWithSelection(selection) {
+    var emptyEl = document.getElementById("checkout-empty");
+    var summaryContainer = document.getElementById("checkout-summary-container");
+    var formBlock = document.getElementById("checkout-form-block");
+    if (emptyEl) emptyEl.classList.remove("is-visible");
+    if (summaryContainer) {
+      summaryContainer.classList.remove("is-hidden");
+      renderSummary(selection, summaryContainer);
+    }
+    if (formBlock) formBlock.classList.remove("is-hidden");
   }
 
   function init() {
@@ -170,7 +176,7 @@
       return;
     }
 
-    setSummary(selection);
+    showCheckoutWithSelection(selection);
 
     var form = document.getElementById("checkout-form");
     var emailInput = document.getElementById("email");
