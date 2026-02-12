@@ -780,13 +780,6 @@ a {
   font-weight: 700;
 }
 
-.card__beta-note {
-  font-size: 0.75rem;
-  color: var(--executive-blue);
-  opacity: 0.9;
-  margin: 0 0 1rem;
-}
-
 .card__shipping {
   font-size: 0.8125rem;
   color: var(--executive-blue);

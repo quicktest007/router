@@ -1,6 +1,6 @@
-# Covenant Eyes Router – Beta Program (Purchase-Intent)
+# Covenant Eyes Router
 
-Static site (HTML, CSS, JS only). No frameworks, no build tools. Runs by opening `index.html` and deploys on GitHub Pages. PDP-style product page with gallery, pack selector, savings, home guide, and Beta Program checkout.
+Static site (HTML, CSS, JS only). No frameworks, no build tools. Runs by opening `index.html` and deploys on GitHub Pages. Product page with gallery, pack selector, savings, and checkout.
 
 ## File tree
 
@@ -53,7 +53,7 @@ Open or serve the site from the **project root** (the folder that contains both 
 
 ## Optional webhook
 
-Edit `assets/config.js` and set `WEBHOOK_URL` to your endpoint. On “Reserve spot in Beta Program” submit, the lead (including email, package, qty, total, savings, UTM) is POSTed as JSON. If unset or the request fails, the lead is still stored in `localStorage`.
+Edit `assets/config.js` and set `WEBHOOK_URL` to your endpoint. On checkout submit (“Place order”), the order/lead data (including email, package, qty, total, savings, UTM) is POSTed as JSON. If unset or the request fails, the data is still stored in `localStorage`.
 
 ## Tracking events
 
@@ -62,7 +62,6 @@ Stored in `localStorage` under the key `events` (and logged to the console):
 - **view_product** – Index page load
 - **select_pack** – User selects 1 PACK or 2 PACK
 - **click_thumbnail** – User changes gallery image
-- **select_home_profile** – User selects a “best for your home” tile (profile + recommended pack)
 - **add_to_cart** – User clicks Add to cart (package, price, qty, savings)
 - **submit_email** – User submits email on checkout
 
