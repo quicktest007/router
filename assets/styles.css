@@ -141,12 +141,18 @@ a {
   }
 
   .header-inner {
-    padding: 0 1rem;
+    padding: 0 0.75rem;
   }
 
   .brand-logo {
     height: 36px;
     max-width: 180px;
+  }
+
+  .header-cart {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem;
   }
 }
 
@@ -1289,6 +1295,298 @@ a {
 
 .policy__back-top-link:hover {
   opacity: 0.9;
+}
+
+/* ========== Responsive: tablet and mobile ========== */
+
+@media (max-width: 768px) {
+  .page {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .card {
+    width: 100%;
+    padding: 2rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .footer__inner {
+    padding: 1.25rem 1rem;
+  }
+
+  .footer__line {
+    font-size: 0.8125rem;
+  }
+
+  /* Checkout: full-width card, comfortable padding */
+  .checkout-page .page {
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .checkout-page .card {
+    max-width: 100%;
+    padding: 2rem 1.25rem;
+    border-radius: 20px;
+  }
+
+  .checkout__title {
+    font-size: 1.375rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .checkout-summary,
+  .checkout__instruction,
+  .empty-cart {
+    padding: 1.25rem 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .checkout__success {
+    padding: 2rem 1.25rem;
+    border-radius: 14px;
+  }
+
+  .checkout__success-title {
+    font-size: 1.25rem;
+  }
+
+  .checkout__success-text {
+    font-size: 0.9375rem;
+  }
+
+  .checkout__airtable-wrap {
+    margin-bottom: 1.25rem;
+    border-radius: 10px;
+  }
+
+  .checkout__airtable-wrap .airtable-embed {
+    min-height: 480px;
+    height: 533px;
+  }
+
+  /* Policy pages */
+  .policy-page {
+    padding: 2rem 1rem 3rem;
+  }
+
+  .policy {
+    padding: 0 0.5rem;
+  }
+
+  .policy__title {
+    font-size: 1.375rem;
+  }
+
+  .policy__section p,
+  .policy__section ul {
+    font-size: 0.9375rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 1.25rem 0.75rem 2.5rem;
+  }
+
+  .card {
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+  }
+
+  .card__title {
+    font-size: 1.5rem;
+  }
+
+  .card__list li {
+    font-size: 0.9375rem;
+    padding-left: 1.25rem;
+  }
+
+  /* Gallery: smaller thumbs on very small screens */
+  .gallery__thumb-col {
+    width: 72px;
+  }
+
+  .gallery__thumb {
+    width: 60px;
+    height: 60px;
+  }
+
+  .gallery__main-wrap {
+    min-height: 240px;
+    max-height: 360px;
+  }
+
+  .gallery__main-wrap .gallery__main {
+    max-height: 360px;
+  }
+
+  /* Pack selector: touch-friendly, slightly smaller */
+  .pack-selector {
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .pack-selector__btn {
+    width: 76px;
+    height: 76px;
+    font-size: 0.6875rem;
+  }
+
+  /* CTA bar: full-width buttons, touch targets */
+  .cta-bar {
+    margin: 1rem 0 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .qty-selector__btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .cta-bar__add-cart {
+    min-height: 48px;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+  }
+
+  /* Checkout: compact on small phones */
+  .checkout-page .page {
+    padding: 1.25rem 0.75rem 1.5rem;
+  }
+
+  .checkout-page .card {
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+  }
+
+  .checkout__back {
+    font-size: 0.9375rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .checkout__title {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .empty-cart {
+    padding: 1.5rem 1rem;
+  }
+
+  .empty-cart h2 {
+    font-size: 1.125rem;
+  }
+
+  .empty-cart .btn-primary {
+    min-height: 48px;
+    padding: 0.875rem 1.25rem;
+  }
+
+  .checkout-summary {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .checkout-summary__value {
+    font-size: 1rem;
+  }
+
+  .checkout-summary__note {
+    font-size: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .checkout__instruction {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .checkout__instruction-main {
+    font-size: 0.9375rem;
+  }
+
+  .checkout__instruction-note {
+    font-size: 0.8125rem;
+  }
+
+  .checkout__success {
+    padding: 1.75rem 1rem;
+    border-radius: 12px;
+  }
+
+  .checkout__success-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .checkout__success-title {
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .checkout__success-text {
+    font-size: 0.9375rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .checkout__success-link {
+    min-height: 48px;
+    padding: 0.75rem 1.25rem;
+    line-height: 1.4;
+  }
+
+  .checkout__airtable-wrap {
+    margin-bottom: 1rem;
+    border-radius: 10px;
+  }
+
+  .checkout__airtable-wrap .airtable-embed {
+    min-height: 420px;
+    height: 480px;
+  }
+
+  /* Footer: wrap and spacing on very small screens */
+  .footer__inner {
+    padding: 1rem 0.75rem;
+  }
+
+  .footer__line {
+    font-size: 0.75rem;
+    line-height: 1.6;
+  }
+
+  .footer__sep {
+    margin: 0 0.35rem;
+  }
+
+  /* Policy: readable on small screens */
+  .policy-page {
+    padding: 1.5rem 0.75rem 2.5rem;
+  }
+
+  .policy__title {
+    font-size: 1.25rem;
+  }
+
+  .policy__heading {
+    font-size: 1rem;
+  }
+
+  .policy__section p,
+  .policy__section ul {
+    font-size: 0.875rem;
+  }
+
+  .policy__back-top-link {
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 
