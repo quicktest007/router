@@ -56,6 +56,11 @@
     }
   }
 
+  function updateCoverage(pkg) {
+    var el = document.getElementById("coverage-sqft");
+    if (el) el.textContent = pkg === "2pack" ? "5,000" : "3,000";
+  }
+
   function getQty() {
     var input = document.getElementById("qty-input");
     if (!input) return 1;
@@ -71,6 +76,7 @@
     var s = getPackSelection();
     updatePrice(s.price);
     updateSavings(s.package);
+    updateCoverage(s.package);
     try {
       localStorage.setItem("selected_package", s.package);
       localStorage.setItem("selected_price", s.price);
