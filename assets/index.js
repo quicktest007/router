@@ -252,6 +252,8 @@
         localStorage.setItem("selected_price", s.price);
         localStorage.setItem("selected_qty", String(qty));
         localStorage.setItem("selected_savings", String(savings));
+        localStorage.setItem("cart_has_items", "1");
+        if (typeof updateHeaderCartCount === "function") updateHeaderCartCount();
       } catch (e) {}
       var url = "checkout.html?package=" + encodeURIComponent(s.package) + "&price=" + encodeURIComponent(s.price) + "&qty=" + encodeURIComponent(qty) + "&savings=" + encodeURIComponent(savings);
       window.location.href = url;

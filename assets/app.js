@@ -58,8 +58,9 @@
     try {
       var el = document.getElementById("header-cart-count");
       if (!el) return;
+      var hasAddedToCart = localStorage.getItem("cart_has_items") === "1";
       var qty = parseInt(localStorage.getItem("selected_qty"), 10);
-      if (isNaN(qty) || qty < 1) {
+      if (!hasAddedToCart || isNaN(qty) || qty < 1) {
         el.textContent = "";
         el.classList.remove("is-visible");
       } else {
