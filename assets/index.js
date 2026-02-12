@@ -220,9 +220,19 @@
     var input = document.getElementById("qty-input");
     if (!input) return;
 
+    var saved = parseInt(localStorage.getItem("selected_qty"), 10);
+    if (!isNaN(saved) && saved >= 1 && saved <= 99) {
+      input.value = String(saved);
+      if (typeof updateHeaderCartCount === "function") updateHeaderCartCount();
+    }
+
     function setQty(n) {
       n = Math.max(1, Math.min(99, n));
       input.value = String(n);
+      try {
+        localStorage.setItem("selected_qty", String(n));
+        if (typeof updateHeaderCartCount === "function") updateHeaderCartCount();
+      } catch (e) {}
     }
 
     if (minus) minus.addEventListener("click", function () { setQty(getQty() - 1); });

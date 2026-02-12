@@ -53,4 +53,27 @@
       return {};
     }
   };
+
+  function updateHeaderCartCount() {
+    try {
+      var el = document.getElementById("header-cart-count");
+      if (!el) return;
+      var qty = parseInt(localStorage.getItem("selected_qty"), 10);
+      if (isNaN(qty) || qty < 1) {
+        el.textContent = "";
+        el.classList.remove("is-visible");
+      } else {
+        el.textContent = qty > 99 ? "99+" : String(qty);
+        el.classList.add("is-visible");
+      }
+    } catch (e) {}
+  }
+
+  window.updateHeaderCartCount = updateHeaderCartCount;
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", updateHeaderCartCount);
+  } else {
+    updateHeaderCartCount();
+  }
 })();

@@ -44,19 +44,17 @@ a {
 
 /* ----- Header ----- */
 .header {
-  background: var(--executive-blue);
-  color: var(--white);
+  background: var(--white);
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 2px solid var(--ally-blue);
-  box-shadow: 0 4px 24px rgba(0, 40, 112, 0.2);
+  box-shadow: 0 2px 12px rgba(0, 40, 112, 0.08);
 }
 
 .header__inner {
   max-width: 1100px;
   margin: 0 auto;
-  padding: 1.125rem 1.5rem;
+  padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -65,30 +63,71 @@ a {
 }
 
 .header__brand {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--white);
-  letter-spacing: -0.02em;
-  transition: opacity 0.2s, color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.2s;
 }
 
 .header__brand:hover {
-  opacity: 0.95;
-  color: var(--white);
+  opacity: 0.9;
 }
 
-.header__tagline {
-  font-size: 0.8125rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.header__logo {
+  display: block;
+  height: 36px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.header__cart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0.5rem;
+  color: var(--hero-blue);
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.header__cart:hover {
   opacity: 0.85;
+  color: var(--hero-blue);
+}
+
+.header__cart-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+.header__cart-count {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 1.125rem;
+  height: 1.125rem;
+  padding: 0 4px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.125rem;
+  text-align: center;
+  color: var(--white);
+  background: var(--hero-blue);
+  border-radius: 999px;
+  display: none;
+}
+
+.header__cart-count.is-visible {
+  display: block;
 }
 
 @media (max-width: 480px) {
   .header__inner {
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 0.875rem 1rem;
+  }
+  .header__logo {
+    height: 32px;
   }
 }
 
