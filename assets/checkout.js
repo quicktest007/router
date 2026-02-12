@@ -67,27 +67,51 @@
     var emptyEl = document.getElementById("checkout-empty");
     var summaryContainer = document.getElementById("checkout-summary-container");
     var formBlock = document.getElementById("checkout-form-block");
+    var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.add("is-visible");
     if (summaryContainer) {
       summaryContainer.innerHTML = "";
       summaryContainer.classList.add("is-hidden");
     }
     if (formBlock) formBlock.classList.add("is-hidden");
+    if (successEl) successEl.classList.remove("is-visible");
   }
 
   function showCheckoutWithSelection(selection) {
     var emptyEl = document.getElementById("checkout-empty");
     var summaryContainer = document.getElementById("checkout-summary-container");
     var formBlock = document.getElementById("checkout-form-block");
+    var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.remove("is-visible");
     if (summaryContainer) {
       summaryContainer.classList.remove("is-hidden");
       renderSummary(selection, summaryContainer);
     }
     if (formBlock) formBlock.classList.remove("is-hidden");
+    if (successEl) successEl.classList.remove("is-visible");
+  }
+
+  function showSuccessView() {
+    var emptyEl = document.getElementById("checkout-empty");
+    var summaryContainer = document.getElementById("checkout-summary-container");
+    var formBlock = document.getElementById("checkout-form-block");
+    var successEl = document.getElementById("checkout-success");
+    if (emptyEl) emptyEl.classList.remove("is-visible");
+    if (summaryContainer) summaryContainer.classList.add("is-hidden");
+    if (formBlock) formBlock.classList.add("is-hidden");
+    if (successEl) successEl.classList.add("is-visible");
   }
 
   function init() {
+    var submitted = getQueryParam("submitted");
+    if (submitted === "1" || submitted === "true") {
+      if (typeof history.replaceState === "function") {
+        history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+      }
+      showSuccessView();
+      return;
+    }
+
     var selection = getSelection();
     if (!selection) {
       showEmptyCart();
