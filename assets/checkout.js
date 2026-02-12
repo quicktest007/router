@@ -118,24 +118,6 @@
     };
   }
 
-  function sendWebhook(lead, done) {
-    var url = typeof WEBHOOK_URL !== "undefined" ? WEBHOOK_URL : "";
-    if (!url || typeof fetch !== "function") {
-      if (done) done(false);
-      return;
-    }
-    fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(lead)
-    })
-      .then(function (res) { if (done) done(res.ok); })
-      .catch(function () {
-        if (console && console.log) console.log("Lead saved locally; webhook failed.");
-        if (done) done(false);
-      });
-  }
-
   function showSuccess() {
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
@@ -210,7 +192,6 @@
 
         var lead = buildLead(email, selection);
         saveLead(lead);
-        sendWebhook(lead, function () {});
 
         if (typeof submitLead === "function") {
           submitLead(lead).then(showSuccess).catch(function () {

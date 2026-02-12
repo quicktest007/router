@@ -51,9 +51,9 @@ Open or serve the site from the **project root** (the folder that contains both 
 4. Choose **Branch**: `main` (or your default), **Folder**: `/ (root)`.
 5. Click **Save**. The site will be at `https://<username>.github.io/<repo-name>/`
 
-## Optional webhook
+## Leads
 
-Edit `assets/config.js` and set `WEBHOOK_URL` to your endpoint. On checkout submit (“Place order”), the order/lead data (including email, package, qty, total, savings, UTM) is POSTed as JSON. If unset or the request fails, the data is still stored in `localStorage`.
+On checkout submit (“Place order”), the lead (email, package, qty, total, savings, UTM) is stored in `localStorage` and sent to the Worker URL in `assets/config.js` (for Airtable).
 
 ## Tracking events
 
