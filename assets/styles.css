@@ -899,11 +899,53 @@ a {
   text-align: center;
 }
 
+.checkout__empty {
+  display: none;
+  background: var(--white);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.checkout__empty.is-visible {
+  display: block;
+}
+
+.checkout__empty-message {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--executive-blue);
+  margin: 0 0 0.5rem;
+}
+
+.checkout__empty-hint {
+  font-size: 0.9375rem;
+  color: var(--executive-blue);
+  margin: 0 0 1rem;
+  opacity: 0.9;
+}
+
+.checkout__empty-link {
+  display: inline-block;
+  font-weight: 600;
+  color: var(--hero-blue);
+  text-decoration: underline;
+}
+
+.checkout__empty-link:hover {
+  opacity: 0.9;
+}
+
 .checkout__summary {
   background: var(--white);
   border-radius: 12px;
   padding: 1rem 1.25rem;
   margin-bottom: 1.5rem;
+}
+
+.checkout__summary.is-hidden {
+  display: none;
 }
 
 .checkout__summary-label {

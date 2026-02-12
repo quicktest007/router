@@ -152,10 +152,21 @@
     if (successEl) successEl.classList.add("is-visible");
   }
 
+  function showEmptyCart() {
+    var emptyEl = document.getElementById("checkout-empty");
+    var summaryEl = document.getElementById("checkout-summary");
+    var formBlock = document.getElementById("checkout-form-block");
+    var successEl = document.getElementById("checkout-success");
+    if (emptyEl) emptyEl.classList.add("is-visible");
+    if (summaryEl) summaryEl.classList.add("is-hidden");
+    if (formBlock) formBlock.classList.add("is-hidden");
+    if (successEl) successEl.classList.remove("is-visible");
+  }
+
   function init() {
     var selection = getSelection();
     if (!selection) {
-      redirectToIndex();
+      showEmptyCart();
       return;
     }
 
