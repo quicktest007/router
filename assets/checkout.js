@@ -86,16 +86,13 @@
     var emptyEl = document.getElementById("checkout-empty");
     var columnsEl = document.getElementById("checkout-columns");
     var summaryContainer = document.getElementById("checkout-summary-container");
-    var routerImage = document.getElementById("checkout-router-image");
+    var summaryCard = document.getElementById("checkout-summary-card");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.add("is-visible");
     if (columnsEl) columnsEl.classList.add("is-hidden");
-    if (summaryContainer) {
-      summaryContainer.innerHTML = "";
-      summaryContainer.classList.add("is-hidden");
-    }
-    if (routerImage) routerImage.classList.add("is-hidden");
+    if (summaryContainer) summaryContainer.innerHTML = "";
+    if (summaryCard) summaryCard.classList.add("is-hidden");
     if (formBlock) formBlock.classList.add("is-hidden");
     if (successEl) successEl.classList.remove("is-visible");
   }
@@ -120,15 +117,14 @@
     var emptyEl = document.getElementById("checkout-empty");
     var columnsEl = document.getElementById("checkout-columns");
     var summaryContainer = document.getElementById("checkout-summary-container");
+    var summaryCard = document.getElementById("checkout-summary-card");
     var formBlock = document.getElementById("checkout-form-block");
     var formBody = document.getElementById("checkout-form-body");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.remove("is-visible");
     if (columnsEl) columnsEl.classList.remove("is-hidden");
-    if (summaryContainer) {
-      summaryContainer.classList.remove("is-hidden");
-      renderSummary(selection, summaryContainer);
-    }
+    if (summaryCard) summaryCard.classList.remove("is-hidden");
+    if (summaryContainer) renderSummary(selection, summaryContainer);
     setRouterImage(selection);
     if (formBody) formBody.classList.remove("is-loaded");
     setAirtableFormPrefill(selection);
@@ -139,14 +135,12 @@
   function showSuccessView() {
     var emptyEl = document.getElementById("checkout-empty");
     var columnsEl = document.getElementById("checkout-columns");
-    var summaryContainer = document.getElementById("checkout-summary-container");
-    var routerImage = document.getElementById("checkout-router-image");
+    var summaryCard = document.getElementById("checkout-summary-card");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.remove("is-visible");
     if (columnsEl) columnsEl.classList.add("is-hidden");
-    if (summaryContainer) summaryContainer.classList.add("is-hidden");
-    if (routerImage) routerImage.classList.add("is-hidden");
+    if (summaryCard) summaryCard.classList.add("is-hidden");
     if (formBlock) formBlock.classList.add("is-hidden");
     if (successEl) successEl.classList.add("is-visible");
   }
