@@ -332,6 +332,9 @@ a {
 /* ----- Left column: content ----- */
 .card__content {
   min-width: 0;
+  padding: 0 1.25rem;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .card__badge {
@@ -726,7 +729,7 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 1.25rem;
-  padding: 1.15rem 1.5rem;
+  padding: 1.15rem 1.25rem;
   border-radius: 12px;
   border: 2px solid rgba(0, 46, 112, 0.2);
   background: var(--white);
@@ -735,6 +738,7 @@ a {
   text-align: left;
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
+  box-sizing: border-box;
 }
 
 .pack-selector__left {
@@ -755,15 +759,15 @@ a {
 }
 
 .pack-selector__card.is-selected {
-  border-color: var(--executive-blue);
-  background: var(--executive-blue);
+  border-color: #002870;
+  background: #002870;
   box-shadow: 0 2px 12px rgba(0, 40, 112, 0.25);
   color: var(--white);
 }
 
 .pack-selector__card.is-selected:hover {
-  background: var(--executive-blue);
-  border-color: var(--executive-blue);
+  background: #002870;
+  border-color: #002870;
 }
 
 .pack-selector__name {
