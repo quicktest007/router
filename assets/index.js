@@ -24,7 +24,7 @@
   var pauseTimeoutId = null;
 
   function getPackSelection() {
-    var btn = document.querySelector(".pack-selector__btn.is-selected");
+    var btn = document.querySelector(".pack-selector__card.is-selected");
     if (!btn) return { package: "1pack", price: "299.00" };
     return {
       package: btn.getAttribute("data-package"),
@@ -33,17 +33,12 @@
   }
 
   function setPackSelection(pkg) {
-    var btns = document.querySelectorAll(".pack-selector__btn");
+    var btns = document.querySelectorAll(".pack-selector__card");
     btns.forEach(function (b) {
       var isSel = b.getAttribute("data-package") === pkg;
       b.classList.toggle("is-selected", isSel);
       b.setAttribute("aria-pressed", isSel ? "true" : "false");
     });
-  }
-
-  function updatePrice(price) {
-    var el = document.getElementById("dynamic-price");
-    if (el) el.textContent = "$" + price;
   }
 
   function updateSavings(pkg) {
@@ -74,7 +69,6 @@
 
   function syncFromPack() {
     var s = getPackSelection();
-    updatePrice(s.price);
     updateSavings(s.package);
     updateCoverage(s.package);
     try {
@@ -207,7 +201,7 @@
   }
 
   function initPackSelector() {
-    var btns = document.querySelectorAll(".pack-selector__btn");
+    var btns = document.querySelectorAll(".pack-selector__card");
     btns.forEach(function (btn) {
       btn.addEventListener("click", function () {
         var pkg = btn.getAttribute("data-package");
@@ -246,16 +240,18 @@
     var input = document.getElementById("qty-input");
     if (!input) return;
 
-    input.value = "0";
-    try {
-      localStorage.setItem("selected_qty", "0");
-    } catch (e) {}
+    var saved = parseInt(localStorage.getItem("selected_qty"), 10);
+    if (!isNaN(saved) && saved >= 1 && saved <= 99) {
+      input.value = String(saved);
+    } else {
+      input.value = "1";
+    }
     if (typeof updateHeaderCartCount === "function") updateHeaderCartCount();
 
     function setQty(n) {
-      n = Math.max(0, Math.min(99, n));
+      n = Math.max(1, Math.min(99, n));
       input.value = String(n);
-      if (n >= 1) clearAddToCartError();
+      clearAddToCartError();
       try {
         localStorage.setItem("selected_qty", String(n));
         if (typeof updateHeaderCartCount === "function") updateHeaderCartCount();
@@ -264,6 +260,65 @@
 
     if (minus) minus.addEventListener("click", function () { setQty(getQty() - 1); });
     if (plus) plus.addEventListener("click", function () { setQty(getQty() + 1); });
+  }
+
+  function initTiltEffect() {
+    var wrap = document.getElementById("gallery-main-wrap");
+    var tiltEl = document.getElementById("gallery-main-3d");
+    if (!wrap || !tiltEl) return;
+
+    var maxTilt = 8;
+    var smooth = 0.15;
+    var currentX = 0;
+    var currentY = 0;
+    var targetX = 0;
+    var targetY = 0;
+    var rafId = null;
+
+    function setTilt(x, y) {
+      targetX = x;
+      targetY = y;
+      if (rafId === null) {
+        rafId = requestAnimationFrame(animate);
+      }
+    }
+
+    function animate() {
+      currentX += (targetX - currentX) * smooth;
+      currentY += (targetY - currentY) * smooth;
+      tiltEl.style.transform =
+        "perspective(800px) rotateX(" + (-currentY) + "deg) rotateY(" + currentX + "deg)";
+      if (Math.abs(currentX - targetX) > 0.01 || Math.abs(currentY - targetY) > 0.01) {
+        rafId = requestAnimationFrame(animate);
+      } else {
+        rafId = null;
+      }
+    }
+
+    function onMove(clientX, clientY) {
+      var rect = wrap.getBoundingClientRect();
+      var cx = rect.left + rect.width / 2;
+      var cy = rect.top + rect.height / 2;
+      var x = (clientX - cx) / (rect.width / 2);
+      var y = (clientY - cy) / (rect.height / 2);
+      x = Math.max(-1, Math.min(1, x));
+      y = Math.max(-1, Math.min(1, y));
+      setTilt(x * maxTilt, y * maxTilt);
+    }
+
+    function onLeave() {
+      setTilt(0, 0);
+    }
+
+    wrap.addEventListener("mousemove", function (e) { onMove(e.clientX, e.clientY); });
+    wrap.addEventListener("mouseleave", onLeave);
+    wrap.addEventListener("touchstart", function (e) {
+      if (e.touches.length) onMove(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+    wrap.addEventListener("touchmove", function (e) {
+      if (e.touches.length) onMove(e.touches[0].clientX, e.touches[0].clientY);
+    }, { passive: true });
+    wrap.addEventListener("touchend", onLeave);
   }
 
   function initAddToCart() {
@@ -299,6 +354,7 @@
     initGallery();
     initPackSelector();
     initQty();
+    initTiltEffect();
     initAddToCart();
 
     syncFromPack();

@@ -53,9 +53,11 @@
               </div>
             </div>
             <div class="gallery__main-col">
-              <div class="gallery__main-wrap">
+              <div class="gallery__main-wrap" id="gallery-main-wrap">
                 <div class="gallery__main-bg" aria-hidden="true"></div>
-                <img class="gallery__main" id="product-image" src="./assets/CErouter1pack.png" alt="Covenant Eyes Router — 1 Pack" loading="eager">
+                <div class="gallery__main-3d" id="gallery-main-3d">
+                  <img class="gallery__main" id="product-image" src="./assets/CErouter1pack.png" alt="Covenant Eyes Router — 1 Pack" loading="eager">
+                </div>
               </div>
             </div>
           </div>
@@ -65,6 +67,7 @@
         <div class="card__content">
           <p class="card__subhead">Next-generation WiFi 6</p>
           <h1 id="product-title" class="card__title">Covenant Eyes Router</h1>
+          <p class="card__tagline">Whole-home WiFi protection you can trust.</p>
 
           <ul class="card__list card__list--above-pack">
             <li>Our fastest model yet (up to 40% boost in performance)</li>
@@ -73,23 +76,54 @@
             <li>Maximize the internet speeds of your WiFi 6 devices</li>
           </ul>
 
+          <p class="pack-size-label">Pack size</p>
           <div class="pack-selector" role="group" aria-label="Package selection">
-            <button type="button" class="pack-selector__btn is-selected" data-package="1pack" data-price="299.00" aria-pressed="true">1 PACK</button>
-            <button type="button" class="pack-selector__btn" data-package="2pack" data-price="499.00" aria-pressed="false">2 PACK</button>
+            <button type="button" class="pack-selector__card is-selected" data-package="1pack" data-price="299.00" aria-pressed="true">
+              <span class="pack-selector__name">1 Pack</span>
+              <span class="pack-selector__price" aria-live="polite">$299.00</span>
+            </button>
+            <button type="button" class="pack-selector__card" data-package="2pack" data-price="499.00" aria-pressed="false">
+              <span class="pack-selector__name">2 Pack</span>
+              <span class="pack-selector__price">$499.00</span>
+              <span class="pack-selector__save">Save $99</span>
+            </button>
           </div>
 
-          <p class="card__price-label">Online price</p>
-          <p class="card__price" id="dynamic-price" aria-live="polite">$299.00</p>
-          <p class="card__savings" id="savings-line">You save $0 (standard pricing)</p>
+          <p class="card__savings card__savings--inline" id="savings-line">You save $0 (standard pricing)</p>
 
-          <p class="card__shipping">FREE US Shipping · 90-Day Satisfaction Guarantee</p>
+          <div class="card__benefits" role="list">
+            <div class="card__benefit" role="listitem">
+              <span class="card__benefit-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+              <span>Free US shipping</span>
+            </div>
+            <div class="card__benefit" role="listitem">
+              <span class="card__benefit-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/></svg>
+              </span>
+              <span>Free support</span>
+            </div>
+            <div class="card__benefit" role="listitem">
+              <span class="card__benefit-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </span>
+              <span>90-day guarantee</span>
+            </div>
+            <div class="card__benefit" role="listitem">
+              <span class="card__benefit-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </span>
+              <span>Secure checkout</span>
+            </div>
+          </div>
 
           <p class="card__installments">Financing options may be available at checkout.</p>
 
           <div class="cta-bar">
             <div class="qty-selector" role="group" aria-label="Quantity">
               <button type="button" class="qty-selector__btn" id="qty-minus" aria-label="Decrease quantity">−</button>
-              <input type="number" class="qty-selector__input" id="qty-input" value="0" min="0" max="99" aria-label="Quantity" readonly>
+              <input type="number" class="qty-selector__input" id="qty-input" value="1" min="1" max="99" aria-label="Quantity" readonly>
               <button type="button" class="qty-selector__btn" id="qty-plus" aria-label="Increase quantity">+</button>
             </div>
             <button type="button" class="cta-bar__add-cart" id="btn-add-cart">
