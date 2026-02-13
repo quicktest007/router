@@ -716,6 +716,7 @@ a {
   flex-direction: column;
   gap: 0.75rem;
   margin-bottom: 1rem;
+  max-width: 100%;
 }
 
 .pack-selector__card {
@@ -724,8 +725,8 @@ a {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
+  gap: 1.25rem;
+  padding: 1.15rem 1.5rem;
   border-radius: 12px;
   border: 2px solid rgba(0, 46, 112, 0.2);
   background: var(--white);
@@ -733,7 +734,7 @@ a {
   font-family: inherit;
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
 }
 
 .pack-selector__left {
@@ -754,9 +755,15 @@ a {
 }
 
 .pack-selector__card.is-selected {
-  border-color: var(--hero-blue);
-  background: rgba(0, 94, 224, 0.06);
-  box-shadow: 0 0 0 2px var(--hero-blue);
+  border-color: var(--executive-blue);
+  background: var(--executive-blue);
+  box-shadow: 0 2px 12px rgba(0, 40, 112, 0.25);
+  color: var(--white);
+}
+
+.pack-selector__card.is-selected:hover {
+  background: var(--executive-blue);
+  border-color: var(--executive-blue);
 }
 
 .pack-selector__name {
@@ -766,7 +773,7 @@ a {
 }
 
 .pack-selector__card.is-selected .pack-selector__name {
-  color: var(--hero-blue);
+  color: var(--white);
 }
 
 .pack-selector__price {
@@ -776,6 +783,10 @@ a {
   flex-shrink: 0;
 }
 
+.pack-selector__card.is-selected .pack-selector__price {
+  color: var(--white);
+}
+
 .pack-selector__save {
   font-size: 0.75rem;
   font-weight: 600;
@@ -783,6 +794,10 @@ a {
   opacity: 0.95;
   display: block;
   margin-top: 0.15rem;
+}
+
+.pack-selector__card.is-selected .pack-selector__save {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 /* Benefits strip (scannable grid) */
