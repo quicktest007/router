@@ -85,11 +85,15 @@
   function setAirtableFormPrefill(selection) {
     var iframe = document.getElementById("checkout-airtable-form");
     if (!iframe) return;
-    var fieldName = (typeof AIRTABLE_PACKAGE_FIELD !== "undefined" && AIRTABLE_PACKAGE_FIELD) ? AIRTABLE_PACKAGE_FIELD : "Package";
-    var value = selection.package === "1pack" ? "1 Pack" : "2 Pack";
-    var encodedField = encodeURIComponent(fieldName).replace(/%20/g, "+");
-    var encodedValue = encodeURIComponent(value);
-    iframe.src = AIRTABLE_FORM_BASE + "?prefill_" + encodedField + "=" + encodedValue;
+    var pkgField = (typeof AIRTABLE_PACKAGE_FIELD !== "undefined" && AIRTABLE_PACKAGE_FIELD) ? AIRTABLE_PACKAGE_FIELD : "Package";
+    var pkgValue = selection.package === "1pack" ? "1 Pack" : "2 Pack";
+    var qtyField = (typeof AIRTABLE_QTY_FIELD !== "undefined" && AIRTABLE_QTY_FIELD) ? AIRTABLE_QTY_FIELD : "Qty";
+    var qtyValue = String(selection.qty || 1);
+    var params = [
+      "prefill_" + encodeURIComponent(pkgField).replace(/%20/g, "+") + "=" + encodeURIComponent(pkgValue),
+      "prefill_" + encodeURIComponent(qtyField).replace(/%20/g, "+") + "=" + encodeURIComponent(qtyValue)
+    ];
+    iframe.src = AIRTABLE_FORM_BASE + "?" + params.join("&");
   }
 
   function showCheckoutWithSelection(selection) {
