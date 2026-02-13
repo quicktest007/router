@@ -1370,56 +1370,16 @@ a {
 }
 
 .checkout__form-intro {
-  padding: 0;
-  flex-shrink: 0;
+  padding: 1.25rem 1.5rem 0.75rem;
 }
 
-/* Top alert banner (hierarchy: notice first) */
-.checkout__form-alert {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  padding: 1rem 1.25rem;
-  margin: 0;
-  background: rgba(0, 40, 112, 0.08);
-  border-radius: 12px;
-  margin: 1.25rem 1.5rem 0.75rem;
+.checkout__form-intro .checkout__instruction-main,
+.checkout__form-intro .checkout__instruction-note {
+  margin: 0 0 0.35rem;
 }
 
-.checkout__form-alert-icon {
-  flex-shrink: 0;
-  color: var(--executive-blue);
-  line-height: 0;
-}
-
-.checkout__form-alert-icon svg {
-  display: block;
-}
-
-.checkout__form-alert-text {
-  font-size: 0.9375rem;
-  color: var(--executive-blue);
-  margin: 0;
-  line-height: 1.45;
-  opacity: 0.95;
-}
-
-/* Form header: title + subtitle */
-.checkout__form-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--executive-blue);
-  margin: 0 1.5rem 0.35rem;
-  line-height: 1.3;
-}
-
-.checkout__form-subtitle {
-  font-size: 0.9375rem;
-  font-weight: 400;
-  color: var(--executive-blue);
-  opacity: 0.85;
-  margin: 0 1.5rem 1.25rem;
-  line-height: 1.45;
+.checkout__form-intro .checkout__instruction-note:last-child {
+  margin-bottom: 0;
 }
 
 .checkout__form-body {
@@ -1476,11 +1436,11 @@ a {
   display: flex;
   flex-direction: column;
   background: var(--white);
-  border: 2px solid var(--executive-blue);
+  border: 1px solid #ccc;
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 40, 112, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .checkout__airtable-wrap .airtable-embed {
@@ -1647,26 +1607,14 @@ a {
   }
 
   .checkout-summary,
+  .checkout__form-intro,
   .empty-cart {
     padding: 1.25rem 1rem;
     margin-bottom: 1.25rem;
   }
 
-  .checkout__form-alert {
-    margin: 1rem 1.25rem 0.5rem;
-    padding: 0.875rem 1rem;
-  }
-
-  .checkout__form-title {
-    font-size: 1.25rem;
-    margin-left: 1.25rem;
-    margin-right: 1.25rem;
-  }
-
-  .checkout__form-subtitle {
-    margin-left: 1.25rem;
-    margin-right: 1.25rem;
-    margin-bottom: 1rem;
+  .checkout__form-intro {
+    margin-bottom: 0.75rem;
   }
 
   .checkout__success {
@@ -1835,26 +1783,16 @@ a {
     margin-top: 0.75rem;
   }
 
-  .checkout__form-alert {
-    margin: 0.75rem 1rem 0.5rem;
-    padding: 0.75rem 1rem;
+  .checkout__form-intro {
+    padding: 1rem 1rem 0.5rem;
   }
 
-  .checkout__form-alert-text {
-    font-size: 0.875rem;
+  .checkout__instruction-main {
+    font-size: 0.9375rem;
   }
 
-  .checkout__form-title {
-    font-size: 1.125rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-
-  .checkout__form-subtitle {
-    font-size: 0.875rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
+  .checkout__instruction-note {
+    font-size: 0.8125rem;
   }
 
   .checkout__success {
