@@ -1052,14 +1052,14 @@ a {
   text-align: center;
 }
 
-/* Two-column layout: order summary (left) + Airtable form (right) */
+/* Two-column layout: order summary (left) + Airtable form (right) – fit viewport, no scroll */
 .checkout__columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
   gap: 2rem;
-  height: 85vh;
-  min-height: 520px;
+  height: calc(100vh - 220px);
+  min-height: 480px;
   align-items: stretch;
   margin-bottom: 1.5rem;
 }
@@ -1078,7 +1078,7 @@ a {
 .checkout__col--form {
   min-width: 0;
   min-height: 0;
-  overflow: auto;
+  overflow: hidden;
 }
 
 /* Empty cart state – shown only when no package selected */
@@ -1406,7 +1406,8 @@ a {
 
 .checkout__form-body .airtable-embed {
   flex: 1 1 auto;
-  min-height: 720px;
+  min-height: 0;
+  height: 100%;
   display: block;
   background: transparent;
 }
@@ -1665,7 +1666,8 @@ a {
   }
 
   .checkout__form-body .airtable-embed {
-    min-height: 600px;
+    min-height: 0;
+    height: 100%;
   }
 
   /* Policy pages */
@@ -1858,7 +1860,8 @@ a {
   }
 
   .checkout__form-body .airtable-embed {
-    min-height: 520px;
+    min-height: 0;
+    height: 100%;
   }
 
   /* Footer: wrap and spacing on very small screens */
