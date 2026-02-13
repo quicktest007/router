@@ -262,65 +262,6 @@
     if (plus) plus.addEventListener("click", function () { setQty(getQty() + 1); });
   }
 
-  function initTiltEffect() {
-    var wrap = document.getElementById("gallery-main-wrap");
-    var tiltEl = document.getElementById("gallery-main-3d");
-    if (!wrap || !tiltEl) return;
-
-    var maxTilt = 8;
-    var smooth = 0.15;
-    var currentX = 0;
-    var currentY = 0;
-    var targetX = 0;
-    var targetY = 0;
-    var rafId = null;
-
-    function setTilt(x, y) {
-      targetX = x;
-      targetY = y;
-      if (rafId === null) {
-        rafId = requestAnimationFrame(animate);
-      }
-    }
-
-    function animate() {
-      currentX += (targetX - currentX) * smooth;
-      currentY += (targetY - currentY) * smooth;
-      tiltEl.style.transform =
-        "perspective(800px) rotateX(" + (-currentY) + "deg) rotateY(" + currentX + "deg)";
-      if (Math.abs(currentX - targetX) > 0.01 || Math.abs(currentY - targetY) > 0.01) {
-        rafId = requestAnimationFrame(animate);
-      } else {
-        rafId = null;
-      }
-    }
-
-    function onMove(clientX, clientY) {
-      var rect = wrap.getBoundingClientRect();
-      var cx = rect.left + rect.width / 2;
-      var cy = rect.top + rect.height / 2;
-      var x = (clientX - cx) / (rect.width / 2);
-      var y = (clientY - cy) / (rect.height / 2);
-      x = Math.max(-1, Math.min(1, x));
-      y = Math.max(-1, Math.min(1, y));
-      setTilt(x * maxTilt, y * maxTilt);
-    }
-
-    function onLeave() {
-      setTilt(0, 0);
-    }
-
-    wrap.addEventListener("mousemove", function (e) { onMove(e.clientX, e.clientY); });
-    wrap.addEventListener("mouseleave", onLeave);
-    wrap.addEventListener("touchstart", function (e) {
-      if (e.touches.length) onMove(e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive: true });
-    wrap.addEventListener("touchmove", function (e) {
-      if (e.touches.length) onMove(e.touches[0].clientX, e.touches[0].clientY);
-    }, { passive: true });
-    wrap.addEventListener("touchend", onLeave);
-  }
-
   function initAddToCart() {
     var btn = document.getElementById("btn-add-cart");
     if (!btn) return;
@@ -354,7 +295,6 @@
     initGallery();
     initPackSelector();
     initQty();
-    initTiltEffect();
     initAddToCart();
 
     syncFromPack();

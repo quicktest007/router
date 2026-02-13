@@ -53,11 +53,9 @@
               </div>
             </div>
             <div class="gallery__main-col">
-              <div class="gallery__main-wrap" id="gallery-main-wrap">
+              <div class="gallery__main-wrap">
                 <div class="gallery__main-bg" aria-hidden="true"></div>
-                <div class="gallery__main-3d" id="gallery-main-3d">
-                  <img class="gallery__main" id="product-image" src="./assets/CErouter1pack.png" alt="Covenant Eyes Router — 1 Pack" loading="eager">
-                </div>
+                <img class="gallery__main" id="product-image" src="./assets/CErouter1pack.png" alt="Covenant Eyes Router — 1 Pack" loading="eager">
               </div>
             </div>
           </div>
@@ -79,13 +77,17 @@
           <p class="pack-size-label">Pack size</p>
           <div class="pack-selector" role="group" aria-label="Package selection">
             <button type="button" class="pack-selector__card is-selected" data-package="1pack" data-price="299.00" aria-pressed="true">
-              <span class="pack-selector__name">1 Pack</span>
+              <span class="pack-selector__left">
+                <span class="pack-selector__name">1 Pack</span>
+              </span>
               <span class="pack-selector__price" aria-live="polite">$299.00</span>
             </button>
             <button type="button" class="pack-selector__card" data-package="2pack" data-price="499.00" aria-pressed="false">
-              <span class="pack-selector__name">2 Pack</span>
+              <span class="pack-selector__left">
+                <span class="pack-selector__name">2 Pack</span>
+                <span class="pack-selector__save">Save $99</span>
+              </span>
               <span class="pack-selector__price">$499.00</span>
-              <span class="pack-selector__save">Save $99</span>
             </button>
           </div>
 
