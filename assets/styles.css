@@ -1025,6 +1025,27 @@ a {
   text-align: center;
 }
 
+/* Two-column layout: order summary (left) + Airtable form (right) */
+.checkout__columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 1.5rem;
+}
+
+.checkout__columns.is-hidden {
+  display: none;
+}
+
+.checkout__col--summary {
+  min-width: 0;
+}
+
+.checkout__col--form {
+  min-width: 0;
+}
+
 /* Empty cart state – shown only when no package selected */
 .empty-cart {
   display: none;
@@ -1446,6 +1467,11 @@ a {
     max-width: 100%;
     padding: 2rem 1.25rem;
     border-radius: 20px;
+  }
+
+  .checkout__columns {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .checkout__title {

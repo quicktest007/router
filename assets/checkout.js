@@ -66,11 +66,13 @@
 
   function showEmptyCart() {
     var emptyEl = document.getElementById("checkout-empty");
+    var columnsEl = document.getElementById("checkout-columns");
     var summaryContainer = document.getElementById("checkout-summary-container");
     var instructionBlock = document.getElementById("checkout-instruction-block");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.add("is-visible");
+    if (columnsEl) columnsEl.classList.add("is-hidden");
     if (summaryContainer) {
       summaryContainer.innerHTML = "";
       summaryContainer.classList.add("is-hidden");
@@ -98,11 +100,13 @@
 
   function showCheckoutWithSelection(selection) {
     var emptyEl = document.getElementById("checkout-empty");
+    var columnsEl = document.getElementById("checkout-columns");
     var summaryContainer = document.getElementById("checkout-summary-container");
     var instructionBlock = document.getElementById("checkout-instruction-block");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.remove("is-visible");
+    if (columnsEl) columnsEl.classList.remove("is-hidden");
     if (summaryContainer) {
       summaryContainer.classList.remove("is-hidden");
       renderSummary(selection, summaryContainer);
@@ -115,11 +119,13 @@
 
   function showSuccessView() {
     var emptyEl = document.getElementById("checkout-empty");
+    var columnsEl = document.getElementById("checkout-columns");
     var summaryContainer = document.getElementById("checkout-summary-container");
     var instructionBlock = document.getElementById("checkout-instruction-block");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.remove("is-visible");
+    if (columnsEl) columnsEl.classList.add("is-hidden");
     if (summaryContainer) summaryContainer.classList.add("is-hidden");
     if (instructionBlock) instructionBlock.classList.add("is-hidden");
     if (formBlock) formBlock.classList.add("is-hidden");
