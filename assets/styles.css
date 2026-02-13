@@ -1058,7 +1058,7 @@ a {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
   gap: 2rem;
-  height: calc(100vh - 220px);
+  height: calc(100vh - 260px);
   min-height: 480px;
   align-items: stretch;
   margin-bottom: 1.5rem;
