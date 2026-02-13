@@ -1311,12 +1311,73 @@ a {
   line-height: 1.4;
 }
 
-.checkout__airtable-wrap {
+.checkout__form-intro {
+  padding: 1.25rem 1.5rem 0.75rem;
+}
+
+.checkout__form-intro .checkout__instruction-main,
+.checkout__form-intro .checkout__instruction-note {
+  margin: 0 0 0.35rem;
+}
+
+.checkout__form-intro .checkout__instruction-note:last-child {
+  margin-bottom: 0;
+}
+
+.checkout__form-body {
+  position: relative;
+  min-height: 75vh;
+  display: flex;
+  align-items: stretch;
+}
+
+.checkout__form-body .airtable-embed {
+  flex: 1 1 auto;
+  min-height: 720px;
+  display: block;
   background: transparent;
+}
+
+.checkout__form-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--white);
+  z-index: 1;
+}
+
+.checkout__form-body.is-loaded .checkout__form-loader {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.checkout__loader-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--executive-blue);
+  animation: checkout-loader-bounce 1.4s ease-in-out infinite both;
+}
+
+.checkout__loader-dot:nth-child(1) { animation-delay: -0.32s; }
+.checkout__loader-dot:nth-child(2) { animation-delay: -0.16s; }
+.checkout__loader-dot:nth-child(3) { animation-delay: 0s; }
+
+@keyframes checkout-loader-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.checkout__airtable-wrap {
+  background: var(--white);
   border: 1px solid #ccc;
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .checkout__airtable-wrap .airtable-embed {
@@ -1480,10 +1541,14 @@ a {
   }
 
   .checkout-summary,
-  .checkout__instruction,
+  .checkout__form-intro,
   .empty-cart {
     padding: 1.25rem 1rem;
     margin-bottom: 1.25rem;
+  }
+
+  .checkout__form-intro {
+    margin-bottom: 0.75rem;
   }
 
   .checkout__success {
@@ -1504,9 +1569,12 @@ a {
     border-radius: 10px;
   }
 
-  .checkout__airtable-wrap .airtable-embed {
-    min-height: 480px;
-    height: 533px;
+  .checkout__form-body {
+    min-height: 70vh;
+  }
+
+  .checkout__form-body .airtable-embed {
+    min-height: 600px;
   }
 
   /* Policy pages */
@@ -1649,9 +1717,8 @@ a {
     margin-top: 0.75rem;
   }
 
-  .checkout__instruction {
-    padding: 1rem;
-    margin-bottom: 1rem;
+  .checkout__form-intro {
+    padding: 1rem 1rem 0.5rem;
   }
 
   .checkout__instruction-main {
@@ -1695,9 +1762,12 @@ a {
     border-radius: 10px;
   }
 
-  .checkout__airtable-wrap .airtable-embed {
-    min-height: 420px;
-    height: 480px;
+  .checkout__form-body {
+    min-height: 65vh;
+  }
+
+  .checkout__form-body .airtable-embed {
+    min-height: 520px;
   }
 
   /* Footer: wrap and spacing on very small screens */

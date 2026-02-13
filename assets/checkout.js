@@ -68,7 +68,6 @@
     var emptyEl = document.getElementById("checkout-empty");
     var columnsEl = document.getElementById("checkout-columns");
     var summaryContainer = document.getElementById("checkout-summary-container");
-    var instructionBlock = document.getElementById("checkout-instruction-block");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.add("is-visible");
@@ -77,7 +76,6 @@
       summaryContainer.innerHTML = "";
       summaryContainer.classList.add("is-hidden");
     }
-    if (instructionBlock) instructionBlock.classList.add("is-hidden");
     if (formBlock) formBlock.classList.add("is-hidden");
     if (successEl) successEl.classList.remove("is-visible");
   }
@@ -102,8 +100,8 @@
     var emptyEl = document.getElementById("checkout-empty");
     var columnsEl = document.getElementById("checkout-columns");
     var summaryContainer = document.getElementById("checkout-summary-container");
-    var instructionBlock = document.getElementById("checkout-instruction-block");
     var formBlock = document.getElementById("checkout-form-block");
+    var formBody = document.getElementById("checkout-form-body");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.remove("is-visible");
     if (columnsEl) columnsEl.classList.remove("is-hidden");
@@ -111,7 +109,7 @@
       summaryContainer.classList.remove("is-hidden");
       renderSummary(selection, summaryContainer);
     }
-    if (instructionBlock) instructionBlock.classList.remove("is-hidden");
+    if (formBody) formBody.classList.remove("is-loaded");
     setAirtableFormPrefill(selection);
     if (formBlock) formBlock.classList.remove("is-hidden");
     if (successEl) successEl.classList.remove("is-visible");
@@ -121,13 +119,11 @@
     var emptyEl = document.getElementById("checkout-empty");
     var columnsEl = document.getElementById("checkout-columns");
     var summaryContainer = document.getElementById("checkout-summary-container");
-    var instructionBlock = document.getElementById("checkout-instruction-block");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.remove("is-visible");
     if (columnsEl) columnsEl.classList.add("is-hidden");
     if (summaryContainer) summaryContainer.classList.add("is-hidden");
-    if (instructionBlock) instructionBlock.classList.add("is-hidden");
     if (formBlock) formBlock.classList.add("is-hidden");
     if (successEl) successEl.classList.add("is-visible");
   }
@@ -147,6 +143,15 @@
       showEmptyCart();
       return;
     }
+
+    var iframe = document.getElementById("checkout-airtable-form");
+    var formBody = document.getElementById("checkout-form-body");
+    if (iframe && formBody) {
+      iframe.addEventListener("load", function onFormLoad() {
+        formBody.classList.add("is-loaded");
+      });
+    }
+
     showCheckoutWithSelection(selection);
   }
 
