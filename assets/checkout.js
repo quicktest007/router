@@ -64,10 +64,22 @@
     container.appendChild(summary);
   }
 
+  function setRouterImage(selection) {
+    var wrap = document.getElementById("checkout-router-image");
+    var img = document.getElementById("checkout-router-img");
+    if (!wrap || !img) return;
+    var filename = selection.package === "1pack" ? "CErouter1pack.png" : "CErouter2pack.png";
+    var label = selection.package === "1pack" ? "1 Pack" : "2 Pack";
+    img.src = "./assets/" + filename;
+    img.alt = "Covenant Eyes Router – " + label;
+    wrap.classList.remove("is-hidden");
+  }
+
   function showEmptyCart() {
     var emptyEl = document.getElementById("checkout-empty");
     var columnsEl = document.getElementById("checkout-columns");
     var summaryContainer = document.getElementById("checkout-summary-container");
+    var routerImage = document.getElementById("checkout-router-image");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.add("is-visible");
@@ -76,6 +88,7 @@
       summaryContainer.innerHTML = "";
       summaryContainer.classList.add("is-hidden");
     }
+    if (routerImage) routerImage.classList.add("is-hidden");
     if (formBlock) formBlock.classList.add("is-hidden");
     if (successEl) successEl.classList.remove("is-visible");
   }
@@ -109,6 +122,7 @@
       summaryContainer.classList.remove("is-hidden");
       renderSummary(selection, summaryContainer);
     }
+    setRouterImage(selection);
     if (formBody) formBody.classList.remove("is-loaded");
     setAirtableFormPrefill(selection);
     if (formBlock) formBlock.classList.remove("is-hidden");
@@ -119,11 +133,13 @@
     var emptyEl = document.getElementById("checkout-empty");
     var columnsEl = document.getElementById("checkout-columns");
     var summaryContainer = document.getElementById("checkout-summary-container");
+    var routerImage = document.getElementById("checkout-router-image");
     var formBlock = document.getElementById("checkout-form-block");
     var successEl = document.getElementById("checkout-success");
     if (emptyEl) emptyEl.classList.remove("is-visible");
     if (columnsEl) columnsEl.classList.add("is-hidden");
     if (summaryContainer) summaryContainer.classList.add("is-hidden");
+    if (routerImage) routerImage.classList.add("is-hidden");
     if (formBlock) formBlock.classList.add("is-hidden");
     if (successEl) successEl.classList.add("is-visible");
   }
