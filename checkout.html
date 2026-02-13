@@ -82,6 +82,17 @@
         </div>
       </div>
     </main>
+
+    <!-- Success modal overlay (shown when user submits the Airtable form) -->
+    <div id="checkout-success-modal" class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-modal-title" aria-hidden="true">
+      <div class="checkout-modal__backdrop"></div>
+      <div class="checkout-modal__dialog">
+        <p class="checkout-modal__icon" aria-hidden="true">✓</p>
+        <h2 id="checkout-modal-title" class="checkout-modal__title">You’re all set!</h2>
+        <p class="checkout-modal__text">Thank you for your order. You have successfully checked out. We’ll follow up with you soon.</p>
+        <a href="index.html" class="checkout-modal__btn">Back to product</a>
+      </div>
+    </div>
   </div>
 
   <footer class="footer" role="contentinfo">

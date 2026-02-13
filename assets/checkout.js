@@ -145,13 +145,39 @@
     if (successEl) successEl.classList.add("is-visible");
   }
 
+  /** Show the success modal overlay on top of the checkout (used when user submits the form). */
+  function showSuccessModal() {
+    var modal = document.getElementById("checkout-success-modal");
+    if (!modal) return;
+    modal.classList.add("is-visible");
+    modal.setAttribute("aria-hidden", "false");
+  }
+
+  /**
+   * Notify that the form was submitted (from redirect param or postMessage).
+   * Other scripts can listen: document.addEventListener("checkoutFormSubmitted", function (e) { ... });
+   */
+  function onFormSubmitted() {
+    try {
+      document.dispatchEvent(new CustomEvent("checkoutFormSubmitted"));
+    } catch (err) {}
+  }
+
   function init() {
     var submitted = getQueryParam("submitted");
     if (submitted === "1" || submitted === "true") {
       if (typeof history.replaceState === "function") {
         history.replaceState({}, document.title, window.location.pathname + window.location.hash);
       }
-      showSuccessView();
+      var selection = getSelection();
+      if (selection) {
+        var iframe = document.getElementById("checkout-airtable-form");
+        var formBody = document.getElementById("checkout-form-body");
+        if (iframe && formBody) iframe.addEventListener("load", function () { formBody.classList.add("is-loaded"); });
+        showCheckoutWithSelection(selection);
+      }
+      showSuccessModal();
+      onFormSubmitted();
       return;
     }
 
@@ -168,6 +194,21 @@
         formBody.classList.add("is-loaded");
       });
     }
+
+    /* Listen for postMessage from Airtable embed when user submits (if Airtable sends it). */
+    window.addEventListener("message", function (event) {
+      if (event.origin !== "https://airtable.com" && event.origin !== "https://www.airtable.com") return;
+      var data = event.data;
+      if (data == null) return;
+      var isSubmit =
+        data === "formSubmit" ||
+        data === "submitSuccess" ||
+        (typeof data === "object" && (data.type === "formSubmit" || data.event === "submitSuccess" || data.submitted === true));
+      if (isSubmit) {
+        showSuccessModal();
+        onFormSubmitted();
+      }
+    });
 
     showCheckoutWithSelection(selection);
   }

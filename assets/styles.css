@@ -1336,6 +1336,91 @@ a {
   transform: translateY(-1px);
 }
 
+/* Success modal overlay – appears over checkout when user submits the form */
+.checkout-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.checkout-modal.is-visible {
+  display: flex;
+}
+
+.checkout-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 40, 112, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.checkout-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  background: var(--white);
+  color: var(--executive-blue);
+  padding: 2.25rem 1.75rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 40, 112, 0.2);
+  border: 2px solid var(--executive-blue);
+}
+
+.checkout-modal__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: 0 auto 1.25rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--white);
+  background: var(--hero-blue);
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(0, 94, 224, 0.35);
+}
+
+.checkout-modal__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 0.75rem;
+  color: var(--executive-blue);
+}
+
+.checkout-modal__text {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1.5rem;
+  opacity: 0.9;
+}
+
+.checkout-modal__btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  background: var(--hero-blue);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.checkout-modal__btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
 .checkout__form-block.is-hidden {
   display: none;
 }
@@ -1656,6 +1741,22 @@ a {
     font-size: 0.9375rem;
   }
 
+  .checkout-modal {
+    padding: 1.25rem;
+  }
+
+  .checkout-modal__dialog {
+    padding: 2rem 1.5rem;
+  }
+
+  .checkout-modal__title {
+    font-size: 1.25rem;
+  }
+
+  .checkout-modal__text {
+    font-size: 0.9375rem;
+  }
+
   .checkout__airtable-wrap {
     margin-bottom: 1.25rem;
     border-radius: 10px;
@@ -1848,6 +1949,35 @@ a {
     min-height: 48px;
     padding: 0.75rem 1.25rem;
     line-height: 1.4;
+  }
+
+  .checkout-modal {
+    padding: 1rem;
+  }
+
+  .checkout-modal__dialog {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .checkout-modal__icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .checkout-modal__title {
+    font-size: 1.125rem;
+  }
+
+  .checkout-modal__text {
+    font-size: 0.9375rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .checkout-modal__btn {
+    min-height: 48px;
+    padding: 0.75rem 1.25rem;
   }
 
   .checkout__airtable-wrap {
