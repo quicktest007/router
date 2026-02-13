@@ -1029,8 +1029,11 @@ a {
 .checkout__columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
   gap: 2rem;
-  align-items: start;
+  height: 85vh;
+  min-height: 520px;
+  align-items: stretch;
   margin-bottom: 1.5rem;
 }
 
@@ -1040,10 +1043,15 @@ a {
 
 .checkout__col--summary {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .checkout__col--form {
   min-width: 0;
+  min-height: 0;
+  overflow: auto;
 }
 
 /* Empty cart state – shown only when no package selected */
@@ -1285,7 +1293,11 @@ a {
 
 .checkout__router-image {
   margin-top: 1.5rem;
-  text-align: center;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .checkout__router-image.is-hidden {
@@ -1294,7 +1306,10 @@ a {
 
 .checkout__router-image img {
   max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: auto;
+  object-fit: contain;
   display: block;
   margin: 0 auto;
   border-radius: 8px;
@@ -1549,6 +1564,9 @@ a {
 
   .checkout__columns {
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: auto;
+    min-height: 0;
     gap: 1.5rem;
   }
 
