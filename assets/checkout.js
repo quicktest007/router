@@ -64,13 +64,20 @@
     container.appendChild(summary);
   }
 
+  function getAssetsBase() {
+    var path = window.location.pathname || "";
+    var lastSlash = path.lastIndexOf("/");
+    var dir = lastSlash >= 0 ? path.substring(0, lastSlash + 1) : "/";
+    return window.location.origin + dir;
+  }
+
   function setRouterImage(selection) {
     var wrap = document.getElementById("checkout-router-image");
     var img = document.getElementById("checkout-router-img");
     if (!wrap || !img) return;
     var filename = selection.package === "1pack" ? "CErouter1pack.png" : "CErouter2pack.png";
     var label = selection.package === "1pack" ? "1 Pack" : "2 Pack";
-    img.src = "./assets/" + filename;
+    img.src = getAssetsBase() + "assets/" + filename;
     img.alt = "Covenant Eyes Router – " + label;
     wrap.classList.remove("is-hidden");
   }
