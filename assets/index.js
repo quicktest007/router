@@ -24,17 +24,21 @@
   var pauseTimeoutId = null;
 
   function getPackSelection() {
-    var radio = document.querySelector("input[name=\"pack\"]:checked");
-    if (!radio) return { package: "1pack", price: "299.00" };
+    var btn = document.querySelector(".pack-selector__card.is-selected");
+    if (!btn) return { package: "1pack", price: "299.00" };
     return {
-      package: radio.value,
-      price: radio.getAttribute("data-price") || (radio.value === "2pack" ? "499.00" : "299.00")
+      package: btn.getAttribute("data-package"),
+      price: btn.getAttribute("data-price")
     };
   }
 
   function setPackSelection(pkg) {
-    var radio = document.querySelector("input[name=\"pack\"][value=\"" + pkg + "\"]");
-    if (radio) radio.checked = true;
+    var btns = document.querySelectorAll(".pack-selector__card");
+    btns.forEach(function (b) {
+      var isSel = b.getAttribute("data-package") === pkg;
+      b.classList.toggle("is-selected", isSel);
+      b.setAttribute("aria-pressed", isSel ? "true" : "false");
+    });
   }
 
   function updateSavings(pkg) {
@@ -197,11 +201,12 @@
   }
 
   function initPackSelector() {
-    var radios = document.querySelectorAll("input[name=\"pack\"]");
-    radios.forEach(function (radio) {
-      radio.addEventListener("change", function () {
-        var pkg = radio.value;
-        var price = radio.getAttribute("data-price") || (pkg === "2pack" ? "499.00" : "299.00");
+    var btns = document.querySelectorAll(".pack-selector__card");
+    btns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var pkg = btn.getAttribute("data-package");
+        var price = btn.getAttribute("data-price");
+        setPackSelection(pkg);
         syncFromPack();
         setImage(0, { fromUser: true, skipFade: false });
         if (typeof track === "function") track("select_pack", { package: pkg, price: price });

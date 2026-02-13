@@ -74,26 +74,22 @@
             <li>Maximize the internet speeds of your WiFi 6 devices</li>
           </ul>
 
-          <fieldset class="pack-selector" role="radiogroup" aria-label="Pack size">
-            <legend class="pack-size-label">Pack size</legend>
-            <label class="pack-selector__card" for="pack-1pack">
-              <input type="radio" name="pack" id="pack-1pack" value="1pack" data-price="299.00" checked class="pack-selector__input">
-              <span class="pack-selector__radio" aria-hidden="true"></span>
+          <p class="pack-size-label">Pack size</p>
+          <div class="pack-selector" role="group" aria-label="Package selection">
+            <button type="button" class="pack-selector__card is-selected" data-package="1pack" data-price="299.00" aria-pressed="true">
               <span class="pack-selector__left">
                 <span class="pack-selector__name">1 Pack</span>
               </span>
               <span class="pack-selector__price" aria-live="polite">$299.00</span>
-            </label>
-            <label class="pack-selector__card" for="pack-2pack">
-              <input type="radio" name="pack" id="pack-2pack" value="2pack" data-price="499.00" class="pack-selector__input">
-              <span class="pack-selector__radio" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="pack-selector__card" data-package="2pack" data-price="499.00" aria-pressed="false">
               <span class="pack-selector__left">
                 <span class="pack-selector__name">2 Pack</span>
                 <span class="pack-selector__save">Save $99</span>
               </span>
               <span class="pack-selector__price">$499.00</span>
-            </label>
-          </fieldset>
+            </button>
+          </div>
 
           <p class="card__savings card__savings--inline" id="savings-line">You save $0 (standard pricing)</p>
 
