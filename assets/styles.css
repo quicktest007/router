@@ -748,6 +748,28 @@ a {
   gap: 0.15rem;
 }
 
+.pack-selector__name-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.pack-selector__check {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--white);
+}
+
+.pack-selector__card.is-selected .pack-selector__check {
+  display: inline-flex;
+}
+
+.pack-selector__check svg {
+  display: block;
+}
+
 .pack-selector__card:hover {
   border-color: var(--hero-blue);
   box-shadow: 0 2px 12px rgba(0, 94, 224, 0.12);
