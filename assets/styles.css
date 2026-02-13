@@ -762,6 +762,11 @@ a {
   color: var(--white);
 }
 
+/* Only the selected card shows the checkmark */
+.pack-selector__card:not(.is-selected) .pack-selector__check {
+  display: none !important;
+}
+
 .pack-selector__card.is-selected .pack-selector__check {
   display: inline-flex;
 }
