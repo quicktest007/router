@@ -147,6 +147,18 @@
 
   /** Show the success modal overlay on top of the checkout (used when user submits the form). */
   function showSuccessModal() {
+    if (typeof window.CESuccessOverlay !== "undefined" && window.CESuccessOverlay.openOverlay) {
+      var extracted = window.CESuccessOverlay.extractDetails();
+      window.CESuccessOverlay.openOverlay({
+        headline: "Thank you! You're in!",
+        text: "Your order was successful. You'll receive an email confirmation shortly.",
+        primaryLabel: "Continue",
+        primaryHref: "index.html",
+        receiptUrl: extracted.receiptUrl,
+        details: extracted.detailsLines.length > 0 ? extracted.detailsLines : null
+      });
+      return;
+    }
     var modal = document.getElementById("checkout-success-modal");
     if (!modal) return;
     modal.classList.add("is-visible");
