@@ -704,22 +704,27 @@ a {
   }
 }
 
-/* Pack size label + card-style selector */
-.pack-size-label {
+/* Pack size: fieldset + radio cards */
+.pack-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+  max-width: 100%;
+  border: none;
+  padding: 0;
+}
+
+.pack-selector .pack-size-label {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--executive-blue);
   margin: 0 0 0.75rem;
-}
-
-.pack-selector {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-  max-width: 100%;
+  padding: 0;
+  float: left;
+  width: 100%;
 }
 
 .pack-selector__card {
@@ -728,7 +733,7 @@ a {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 1.25rem;
+  gap: 1rem;
   padding: 1.15rem 1.25rem;
   border-radius: 12px;
   border: 2px solid rgba(0, 46, 112, 0.2);
@@ -741,11 +746,46 @@ a {
   box-sizing: border-box;
 }
 
+/* Visually hide native radio, keep for screen readers */
+.pack-selector__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Custom radio circle: empty when unchecked, filled when selected */
+.pack-selector__radio {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--executive-blue);
+  border-radius: 50%;
+  background: var(--white);
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.pack-selector__card:has(input:checked) .pack-selector__radio {
+  background: radial-gradient(circle at center, #002870 0%, #002870 35%, var(--white) 40%);
+  border-color: var(--white);
+}
+
+.pack-selector__card:has(input:focus-visible) .pack-selector__radio {
+  box-shadow: 0 0 0 2px var(--hero-blue);
+}
+
 .pack-selector__left {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.15rem;
+  flex: 1;
+  min-width: 0;
 }
 
 .pack-selector__card:hover {
@@ -753,19 +793,14 @@ a {
   box-shadow: 0 2px 12px rgba(0, 94, 224, 0.12);
 }
 
-.pack-selector__card:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px var(--hero-blue);
-}
-
-.pack-selector__card.is-selected {
+.pack-selector__card:has(input:checked) {
   border-color: #002870;
   background: #002870;
   box-shadow: 0 2px 12px rgba(0, 40, 112, 0.25);
   color: var(--white);
 }
 
-.pack-selector__card.is-selected:hover {
+.pack-selector__card:has(input:checked):hover {
   background: #002870;
   border-color: #002870;
 }
@@ -776,7 +811,7 @@ a {
   color: var(--executive-blue);
 }
 
-.pack-selector__card.is-selected .pack-selector__name {
+.pack-selector__card:has(input:checked) .pack-selector__name {
   color: var(--white);
 }
 
@@ -787,7 +822,7 @@ a {
   flex-shrink: 0;
 }
 
-.pack-selector__card.is-selected .pack-selector__price {
+.pack-selector__card:has(input:checked) .pack-selector__price {
   color: var(--white);
 }
 
@@ -800,7 +835,7 @@ a {
   margin-top: 0.15rem;
 }
 
-.pack-selector__card.is-selected .pack-selector__save {
+.pack-selector__card:has(input:checked) .pack-selector__save {
   color: rgba(255, 255, 255, 0.9);
 }
 
