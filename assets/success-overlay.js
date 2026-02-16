@@ -22,8 +22,8 @@
   // Default copy (override via openOverlay({ headline, text }) or data attrs).
   var OVERLAY_MESSAGES = {
     headline: "Order confirmed",
-    text: "Your order was successful. You'll receive an email confirmation shortly.",
-    primaryCta: "Continue",
+    text: "Thank you for your order. We'll follow up with you soon.",
+    primaryCta: "Back to home",
     receiptCta: "View receipt"
   };
 
@@ -143,6 +143,7 @@
 
     overlayEl.classList.add("is-visible");
     overlayEl.setAttribute("aria-hidden", "false");
+    document.documentElement.classList.add("ce-success-overlay-open");
     document.body.classList.add("ce-success-overlay-open");
 
     var legacyModal = document.getElementById("checkout-success-modal");
@@ -166,6 +167,7 @@
 
     overlayEl.classList.remove("is-visible");
     overlayEl.setAttribute("aria-hidden", "true");
+    document.documentElement.classList.remove("ce-success-overlay-open");
     document.body.classList.remove("ce-success-overlay-open");
 
     if (focusTrapHandler) {
@@ -277,9 +279,9 @@
       observed = true;
       var extracted = extractDetails();
       openOverlay({
-        headline: "Thank you! You're in!",
-        text: "Your order was successful. You'll receive an email confirmation shortly.",
-        primaryLabel: "Continue",
+        headline: "Order confirmed",
+        text: "Thank you for your order. We'll follow up with you soon.",
+        primaryLabel: "Back to home",
         primaryHref: "index.html",
         receiptUrl: extracted.receiptUrl,
         details: extracted.detailsLines.length > 0 ? extracted.detailsLines : null
@@ -304,9 +306,9 @@
     if (checkSuccessIndicators()) {
       var extracted = extractDetails();
       openOverlay({
-        headline: "Thank you! You're in!",
-        text: "Your order was successful. You'll receive an email confirmation shortly.",
-        primaryLabel: "Continue",
+        headline: "Order confirmed",
+        text: "Thank you for your order. We'll follow up with you soon.",
+        primaryLabel: "Back to home",
         primaryHref: "index.html",
         receiptUrl: extracted.receiptUrl,
         details: extracted.detailsLines.length > 0 ? extracted.detailsLines : null
@@ -316,7 +318,7 @@
 
     try {
       if (localStorage.getItem("forceSuccessOverlay") === "true") {
-        openOverlay({ headline: "Thank you! You're in!", text: "Your order was successful. (Dev: forceSuccessOverlay)" });
+        openOverlay({ headline: "Order confirmed", text: "Your order was successful. (Dev: forceSuccessOverlay)" });
         return;
       }
     } catch (e) {}
@@ -327,9 +329,9 @@
       if (overlayEl && overlayEl.classList.contains("is-visible")) return;
       var extracted = extractDetails();
       openOverlay({
-        headline: "Thank you! You're in!",
-        text: "Your order was successful. You'll receive an email confirmation shortly.",
-        primaryLabel: "Continue",
+        headline: "Order confirmed",
+        text: "Thank you for your order. We'll follow up with you soon.",
+        primaryLabel: "Back to home",
         primaryHref: "index.html",
         receiptUrl: extracted.receiptUrl,
         details: extracted.detailsLines.length > 0 ? extracted.detailsLines : null

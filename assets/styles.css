@@ -1656,6 +1656,7 @@ a {
   display: none !important;
 }
 
+html.ce-success-overlay-open,
 body.ce-success-overlay-open {
   overflow: hidden;
 }

@@ -166,14 +166,17 @@
     if (successEl) successEl.classList.add("is-visible");
   }
 
-  /** Show the success modal overlay on top of the checkout (used when user submits the form). */
+  /** Show the full-screen success overlay on top of the checkout (used when user submits the form). */
   function showSuccessModal() {
+    if (successShown) return;
+    successShown = true;
+
     if (typeof window.CESuccessOverlay !== "undefined" && window.CESuccessOverlay.openOverlay) {
       var extracted = window.CESuccessOverlay.extractDetails();
       window.CESuccessOverlay.openOverlay({
-        headline: "Thank you! You're in!",
-        text: "Your order was successful. You'll receive an email confirmation shortly.",
-        primaryLabel: "Continue",
+        headline: "Order confirmed",
+        text: "Thank you for your order. We'll follow up with you soon.",
+        primaryLabel: "Back to home",
         primaryHref: "index.html",
         receiptUrl: extracted.receiptUrl,
         details: extracted.detailsLines.length > 0 ? extracted.detailsLines : null
@@ -194,6 +197,27 @@
     try {
       document.dispatchEvent(new CustomEvent("checkoutFormSubmitted"));
     } catch (err) {}
+  }
+
+  /** Only show success overlay once per page. */
+  var successShown = false;
+
+  /**
+   * Safely check if we can detect success from the iframe (URL or body text).
+   * Cross-origin will throw; we never surface errors.
+   */
+  function detectSuccessFromIframe() {
+    var iframe = document.getElementById("checkout-airtable-form");
+    if (!iframe) return false;
+    try {
+      var loc = iframe.contentWindow && iframe.contentWindow.location;
+      if (loc && loc.href && loc.href.indexOf("/success") !== -1) return true;
+    } catch (e) {}
+    try {
+      var doc = iframe.contentDocument || (iframe.contentWindow && iframe.contentWindow.document);
+      if (doc && doc.body && doc.body.innerText && doc.body.innerText.indexOf("Thank you") !== -1) return true;
+    } catch (e) {}
+    return false;
   }
 
   function init() {
@@ -228,20 +252,68 @@
       });
     }
 
-    /* Listen for postMessage from Airtable embed when user submits (if Airtable sends it). */
+    /* 1) postMessage from Airtable embed – only accept from Airtable origin. */
     window.addEventListener("message", function (event) {
-      if (event.origin !== "https://airtable.com" && event.origin !== "https://www.airtable.com") return;
-      var data = event.data;
+      if (!event.origin || event.origin.indexOf("airtable.com") === -1) return;
+      var data;
+      try {
+        data = event.data;
+      } catch (e) {
+        return;
+      }
       if (data == null) return;
-      var isSubmit =
-        data === "formSubmit" ||
-        data === "submitSuccess" ||
-        (typeof data === "object" && (data.type === "formSubmit" || data.event === "submitSuccess" || data.submitted === true));
+      var isSubmit = false;
+      if (typeof data === "string") {
+        isSubmit = data === "formSubmit" || data === "submitSuccess" || data === "airtableFormSubmit";
+      } else if (typeof data === "object") {
+        isSubmit = data.type === "formSubmit" || data.event === "submitSuccess" || data.submitted === true;
+      }
       if (isSubmit) {
         showSuccessModal();
         onFormSubmitted();
       }
     });
+
+    /* 2) Fallback: observe iframe src for URL change to include "/success". */
+    var iframe = document.getElementById("checkout-airtable-form");
+    if (iframe) {
+      try {
+        var srcObserver = new MutationObserver(function (mutations) {
+          for (var i = 0; i < mutations.length; i++) {
+            if (mutations[i].attributeName === "src") {
+              var src = iframe.getAttribute("src") || "";
+              if (src.indexOf("/success") !== -1) {
+                showSuccessModal();
+                onFormSubmitted();
+                srcObserver.disconnect();
+                break;
+              }
+            }
+          }
+        });
+        srcObserver.observe(iframe, { attributes: true, attributeFilter: ["src"] });
+      } catch (e) {}
+    }
+
+    /* 3) Fallback: poll iframe location/body for success (cross-origin will throw; we ignore). */
+    var pollCount = 0;
+    var pollMax = 30;
+    var pollInterval = setInterval(function () {
+      if (successShown) {
+        clearInterval(pollInterval);
+        return;
+      }
+      pollCount++;
+      if (pollCount > pollMax) {
+        clearInterval(pollInterval);
+        return;
+      }
+      if (detectSuccessFromIframe()) {
+        clearInterval(pollInterval);
+        showSuccessModal();
+        onFormSubmitted();
+      }
+    }, 2000);
 
     showCheckoutWithSelection(selection);
   }
