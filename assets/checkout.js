@@ -110,22 +110,36 @@
 
   var AIRTABLE_FORM_BASE = "https://airtable.com/embed/app8UV0RBo7wvJy7G/pagKOCvwDdnEpCyel/form";
 
-  /** Build iframe URL with prefill_Package and prefill_QTY. Only set src when selection is valid. */
+  /**
+   * Build iframe src with Airtable prefill and hide params.
+   * - prefill_Package, prefill_QTY: so submission always includes Package and QTY (must match Airtable single-select text exactly).
+   * - hide_Package=true, hide_QTY=true: hide those fields in the form so the user cannot edit them (they see our Order Summary only).
+   * Fallback: if a value is missing, we do not add that field's hide param so QA can see the field for debugging.
+   */
   function setAirtableFormPrefill(selection) {
     var iframe = document.getElementById("checkout-airtable-form");
     if (!iframe) return;
-    if (!isValidSelection(selection)) {
+    var pkgField = (typeof AIRTABLE_PACKAGE_FIELD !== "undefined" && AIRTABLE_PACKAGE_FIELD) ? AIRTABLE_PACKAGE_FIELD : "Package";
+    var qtyField = (typeof AIRTABLE_QTY_FIELD !== "undefined" && AIRTABLE_QTY_FIELD) ? AIRTABLE_QTY_FIELD : "QTY";
+    var pkgValue = selection && (selection.package === "1pack" || selection.package === "2pack")
+      ? (selection.package === "1pack" ? "1 Pack" : "2 Pack")
+      : "";
+    var qtyValue = selection && selection.qty != null && String(selection.qty).trim() !== ""
+      ? String(Math.min(99, Math.max(1, parseInt(selection.qty, 10) || 1)))
+      : "";
+    var params = [];
+    if (pkgValue !== "") {
+      params.push("prefill_" + encodeURIComponent(pkgField).replace(/%20/g, "+") + "=" + encodeURIComponent(pkgValue));
+      params.push("hide_" + encodeURIComponent(pkgField).replace(/%20/g, "+") + "=true");
+    }
+    if (qtyValue !== "") {
+      params.push("prefill_" + encodeURIComponent(qtyField).replace(/%20/g, "+") + "=" + encodeURIComponent(qtyValue));
+      params.push("hide_" + encodeURIComponent(qtyField).replace(/%20/g, "+") + "=true");
+    }
+    if (params.length === 0) {
       iframe.removeAttribute("src");
       return;
     }
-    var pkgField = (typeof AIRTABLE_PACKAGE_FIELD !== "undefined" && AIRTABLE_PACKAGE_FIELD) ? AIRTABLE_PACKAGE_FIELD : "Package";
-    var pkgValue = selection.package === "1pack" ? "1 Pack" : "2 Pack";
-    var qtyField = (typeof AIRTABLE_QTY_FIELD !== "undefined" && AIRTABLE_QTY_FIELD) ? AIRTABLE_QTY_FIELD : "QTY";
-    var qtyValue = String(selection.qty || 1);
-    var params = [
-      "prefill_" + encodeURIComponent(pkgField).replace(/%20/g, "+") + "=" + encodeURIComponent(pkgValue),
-      "prefill_" + encodeURIComponent(qtyField).replace(/%20/g, "+") + "=" + encodeURIComponent(qtyValue)
-    ];
     iframe.src = AIRTABLE_FORM_BASE + "?" + params.join("&");
   }
 
