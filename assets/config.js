@@ -2,8 +2,8 @@
  * App config. Add any global config here.
  */
 
-/** Airtable form: field name for package selection (must match your form field exactly). Used to prefill 1 Pack / 2 Pack. */
+/** Airtable form: column name for package (must match Airtable exactly). Keep field in the form; we hide it via hide_Package=true so it still submits. */
 var AIRTABLE_PACKAGE_FIELD = "Package";
 
-/** Airtable form: field name for quantity (must match your form field exactly, e.g. "QTY" or "Qty"). Used to prefill the +/- selection. */
+/** Airtable form: column name for quantity (must match Airtable exactly). Keep field in the form; we hide it via hide_QTY=true so it still submits. */
 var AIRTABLE_QTY_FIELD = "QTY";

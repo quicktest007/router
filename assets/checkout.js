@@ -99,7 +99,11 @@
 
   var AIRTABLE_FORM_BASE = "https://airtable.com/embed/app8UV0RBo7wvJy7G/pagKOCvwDdnEpCyel/form";
 
-  /** Set iframe src with prefill_Package and prefill_QTY so the user's selection is sent to Airtable. */
+  /**
+   * Build Airtable embed URL with prefill + hide params so Package and QTY are submitted but not editable.
+   * Fields must remain in the Airtable form; hide_Package=true and hide_QTY=true hide them in the UI.
+   * Structure: ?prefill_Package=...&prefill_QTY=...&hide_Package=true&hide_QTY=true
+   */
   function setAirtableFormPrefill(selection) {
     var iframe = document.getElementById("checkout-airtable-form");
     if (!iframe) return;
@@ -108,12 +112,22 @@
       return;
     }
     var pkgField = (typeof AIRTABLE_PACKAGE_FIELD !== "undefined" && AIRTABLE_PACKAGE_FIELD) ? AIRTABLE_PACKAGE_FIELD : "Package";
+    var qtyField = (typeof AIRTABLE_QTY_FIELD !== "undefined" && AIRTABLE_QTY_FIELD) ? AIRTABLE_QTY_FIELD : "QTY";
     var pkgValue = selection.package === "1pack" ? "1 Pack" : "2 Pack";
-    var qtyField = (typeof AIRTABLE_QTY_FIELD !== "undefined" && AIRTABLE_QTY_FIELD) ? AIRTABLE_QTY_FIELD : "Qty";
-    var qtyValue = String(selection.qty || 1);
+    var qtyValue = String(Math.min(99, Math.max(1, parseInt(selection.qty, 10) || 1)));
+
+    function enc(name) {
+      return encodeURIComponent(name).replace(/%20/g, "+");
+    }
+    function encVal(val) {
+      return encodeURIComponent(val).replace(/%20/g, "+");
+    }
+
     var params = [
-      "prefill_" + encodeURIComponent(pkgField).replace(/%20/g, "+") + "=" + encodeURIComponent(pkgValue),
-      "prefill_" + encodeURIComponent(qtyField).replace(/%20/g, "+") + "=" + encodeURIComponent(qtyValue)
+      "prefill_" + enc(pkgField) + "=" + encVal(pkgValue),
+      "prefill_" + enc(qtyField) + "=" + encVal(qtyValue),
+      "hide_" + enc(pkgField) + "=true",
+      "hide_" + enc(qtyField) + "=true"
     ];
     iframe.src = AIRTABLE_FORM_BASE + "?" + params.join("&");
   }
