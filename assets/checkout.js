@@ -43,6 +43,17 @@
     return { package: pkg, price: price, qty: qty, savings: savings };
   }
 
+  /** Package and QTY must be valid before we show the form or set iframe src. */
+  function isValidSelection(selection) {
+    if (!selection || typeof selection !== "object") return false;
+    var pkg = selection.package;
+    var qty = selection.qty;
+    if (pkg !== "1pack" && pkg !== "2pack") return false;
+    var n = parseInt(qty, 10);
+    if (isNaN(n) || n < 1) return false;
+    return true;
+  }
+
   function renderSummary(selection, container) {
     if (!container) return;
     var label = selection.package === "1pack" ? "1 Pack" : "2 Pack";
@@ -99,18 +110,43 @@
 
   var AIRTABLE_FORM_BASE = "https://airtable.com/embed/app8UV0RBo7wvJy7G/pagKOCvwDdnEpCyel/form";
 
+  /** Build iframe URL with prefill_Package and prefill_QTY. Only set src when selection is valid. */
   function setAirtableFormPrefill(selection) {
     var iframe = document.getElementById("checkout-airtable-form");
     if (!iframe) return;
+    if (!isValidSelection(selection)) {
+      iframe.removeAttribute("src");
+      return;
+    }
     var pkgField = (typeof AIRTABLE_PACKAGE_FIELD !== "undefined" && AIRTABLE_PACKAGE_FIELD) ? AIRTABLE_PACKAGE_FIELD : "Package";
     var pkgValue = selection.package === "1pack" ? "1 Pack" : "2 Pack";
-    var qtyField = (typeof AIRTABLE_QTY_FIELD !== "undefined" && AIRTABLE_QTY_FIELD) ? AIRTABLE_QTY_FIELD : "Qty";
+    var qtyField = (typeof AIRTABLE_QTY_FIELD !== "undefined" && AIRTABLE_QTY_FIELD) ? AIRTABLE_QTY_FIELD : "QTY";
     var qtyValue = String(selection.qty || 1);
     var params = [
       "prefill_" + encodeURIComponent(pkgField).replace(/%20/g, "+") + "=" + encodeURIComponent(pkgValue),
       "prefill_" + encodeURIComponent(qtyField).replace(/%20/g, "+") + "=" + encodeURIComponent(qtyValue)
     ];
     iframe.src = AIRTABLE_FORM_BASE + "?" + params.join("&");
+  }
+
+  /** Populate Order Summary above the iframe (Package, Quantity, Price). Hidden until valid selection. */
+  function renderOrderSummary(selection) {
+    var block = document.getElementById("checkout-order-summary");
+    var pkgEl = document.getElementById("checkout-order-package");
+    var qtyEl = document.getElementById("checkout-order-qty");
+    var priceEl = document.getElementById("checkout-order-price");
+    if (!block || !isValidSelection(selection)) {
+      if (block) block.classList.add("is-hidden");
+      return;
+    }
+    var label = selection.package === "1pack" ? "1 Pack" : "2 Pack";
+    var qty = Math.min(99, Math.max(1, parseInt(selection.qty, 10) || 1));
+    var unitPrice = parseFloat(selection.price, 10) || (selection.package === "1pack" ? 299 : 499);
+    var total = (unitPrice * qty).toFixed(2);
+    if (pkgEl) pkgEl.textContent = label;
+    if (qtyEl) qtyEl.textContent = String(qty);
+    if (priceEl) priceEl.textContent = "$" + total + " USD";
+    block.classList.remove("is-hidden");
   }
 
   function showCheckoutWithSelection(selection) {
@@ -120,15 +156,22 @@
     var summaryCard = document.getElementById("checkout-summary-card");
     var formBlock = document.getElementById("checkout-form-block");
     var formBody = document.getElementById("checkout-form-body");
+    var orderSummaryBlock = document.getElementById("checkout-order-summary");
     var successEl = document.getElementById("checkout-success");
+    if (!isValidSelection(selection)) {
+      showEmptyCart();
+      return;
+    }
     if (emptyEl) emptyEl.classList.remove("is-visible");
     if (columnsEl) columnsEl.classList.remove("is-hidden");
     if (summaryCard) summaryCard.classList.remove("is-hidden");
     if (summaryContainer) renderSummary(selection, summaryContainer);
     setRouterImage(selection);
+    renderOrderSummary(selection);
     if (formBody) formBody.classList.remove("is-loaded");
     setAirtableFormPrefill(selection);
     if (formBlock) formBlock.classList.remove("is-hidden");
+    if (orderSummaryBlock && isValidSelection(selection)) orderSummaryBlock.classList.remove("is-hidden");
     if (successEl) successEl.classList.remove("is-visible");
   }
 
@@ -145,17 +188,27 @@
     if (successEl) successEl.classList.add("is-visible");
   }
 
-  /** Show the success modal overlay on top of the checkout (used when user submits the form). */
+  /** Show the success modal overlay with Package/QTY/Price echoed. */
   function showSuccessModal() {
     if (typeof window.CESuccessOverlay !== "undefined" && window.CESuccessOverlay.openOverlay) {
+      var selection = getSelection();
+      var detailsLines = [];
+      if (isValidSelection(selection)) {
+        var label = selection.package === "1pack" ? "1 Pack" : "2 Pack";
+        var total = (parseFloat(selection.price, 10) || 0) * (parseInt(selection.qty, 10) || 1);
+        detailsLines.push("Package: " + label);
+        detailsLines.push("Quantity: " + selection.qty);
+        detailsLines.push("Total: $" + total.toFixed(2) + " USD");
+      }
       var extracted = window.CESuccessOverlay.extractDetails();
+      if (detailsLines.length === 0 && extracted.detailsLines.length > 0) detailsLines = extracted.detailsLines;
       window.CESuccessOverlay.openOverlay({
         headline: "Thank you! You're in!",
         text: "Your order was successful. You'll receive an email confirmation shortly.",
         primaryLabel: "Continue",
         primaryHref: "index.html",
         receiptUrl: extracted.receiptUrl,
-        details: extracted.detailsLines.length > 0 ? extracted.detailsLines : null
+        details: detailsLines.length > 0 ? detailsLines : null
       });
       return;
     }

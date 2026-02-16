@@ -1688,6 +1688,49 @@ body.ce-success-overlay-open {
   display: none;
 }
 
+/* Order Summary above Airtable iframe (Package, QTY, Price – read-only display) */
+.checkout__order-summary {
+  flex-shrink: 0;
+  padding: 1rem 1.25rem;
+  margin: 0 1.25rem 1rem;
+  background: var(--executive-soft);
+  border-radius: 10px;
+  border: 1px solid rgba(0, 40, 112, 0.12);
+}
+
+.checkout__order-summary.is-hidden {
+  display: none;
+}
+
+.checkout__order-summary-title {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--executive-blue);
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.checkout__order-summary-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 1.25rem;
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+.checkout__order-summary-term {
+  color: var(--executive-blue);
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.checkout__order-summary-detail {
+  margin: 0;
+  color: var(--executive-blue);
+  font-weight: 500;
+}
+
 .checkout__summary-card .checkout__router-image {
   margin-top: 0;
 }
