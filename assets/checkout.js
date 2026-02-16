@@ -48,6 +48,8 @@
     var label = selection.package === "1pack" ? "1 Pack" : "2 Pack";
     var unitPrice = parseFloat(selection.price, 10);
     var total = (unitPrice * selection.qty).toFixed(2);
+    var coverage = selection.package === "2pack" ? "5,000" : "3,000";
+    var specs = "WiFi 6 · Up to " + coverage + " sq ft coverage";
 
     var summary = document.createElement("div");
     summary.className = "checkout-summary";
@@ -59,7 +61,7 @@
       (selection.savings > 0
         ? "<p class=\"checkout-summary__savings\">You save $" + selection.savings + " (vs. buying two 1-packs)</p>"
         : "") +
-      "<p class=\"checkout-summary__note\">Summary reflects your selection from the product page. If you change the option in the form, your submission will use the form choice.</p>";
+      "<p class=\"checkout-summary__specs\">" + specs + "</p>";
     container.innerHTML = "";
     container.appendChild(summary);
   }

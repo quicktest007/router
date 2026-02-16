@@ -1221,10 +1221,10 @@ a {
   margin: 0;
 }
 
-.checkout-summary__note {
+.checkout-summary__specs {
   font-size: 0.8125rem;
   color: var(--executive-blue);
-  opacity: 0.85;
+  opacity: 0.9;
   margin: 1rem 0 0;
   line-height: 1.4;
 }
@@ -2176,7 +2176,7 @@ body.ce-success-overlay-open {
     font-size: 1rem;
   }
 
-  .checkout-summary__note {
+  .checkout-summary__specs {
     font-size: 0.75rem;
     margin-top: 0.75rem;
   }
