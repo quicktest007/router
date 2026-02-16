@@ -759,6 +759,10 @@ a {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #16a34a;
   color: var(--white);
 }
 
@@ -773,6 +777,8 @@ a {
 
 .pack-selector__check svg {
   display: block;
+  width: 12px;
+  height: 12px;
 }
 
 .pack-selector__card:hover {
