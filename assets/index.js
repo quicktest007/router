@@ -200,6 +200,9 @@
     });
   }
 
+  var GALLERY_INDEX_1PACK = 0;
+  var GALLERY_INDEX_2PACK = 3;
+
   function initPackSelector() {
     var btns = document.querySelectorAll(".pack-selector__card");
     btns.forEach(function (btn) {
@@ -208,7 +211,8 @@
         var price = btn.getAttribute("data-price");
         setPackSelection(pkg);
         syncFromPack();
-        setImage(0, { fromUser: true, skipFade: false });
+        var galleryIndex = pkg === "2pack" ? GALLERY_INDEX_2PACK : GALLERY_INDEX_1PACK;
+        setImage(galleryIndex, { fromUser: true, skipFade: false });
         if (typeof track === "function") track("select_pack", { package: pkg, price: price });
       });
     });
