@@ -63,6 +63,17 @@
     return isNaN(n) || n < 0 ? 0 : Math.min(99, n);
   }
 
+  /** Selected package label for analytics (e.g. "1 Pack", "2 Pack"). */
+  function getSelectedPackage() {
+    var s = getPackSelection();
+    return s.package === "1pack" ? "1 Pack" : "2 Pack";
+  }
+
+  /** Current quantity from stepper (integer 1–99). */
+  function getQuantity() {
+    return getQty();
+  }
+
   function getSavings(pkg) {
     return pkg === "2pack" ? SAVINGS_2PACK : 0;
   }
@@ -277,6 +288,16 @@
       }
       clearAddToCartError();
       var s = getPackSelection();
+      var packageLabel = getSelectedPackage();
+      var payload = {
+        package: packageLabel,
+        quantity: qty,
+        page: location.pathname || ""
+      };
+      if (window.CEAnalytics && typeof window.CEAnalytics.capture === "function") {
+        window.CEAnalytics.capture("add_to_cart_clicked", payload);
+      }
+      console.log("[PostHog] add_to_cart_clicked", payload);
       var savings = getSavings(s.package);
       if (typeof track === "function") track("add_to_cart", { package: s.package, price: s.price, qty: qty, savings: savings });
       try {
@@ -295,6 +316,9 @@
   function init() {
     if (typeof captureUTM === "function") captureUTM();
     if (typeof track === "function") track("view_product", {});
+    if (window.CEAnalytics && typeof window.CEAnalytics.capture === "function") {
+      window.CEAnalytics.capture("product_page_viewed", { page: location.pathname || "" });
+    }
 
     initGallery();
     initPackSelector();

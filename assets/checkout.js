@@ -231,12 +231,22 @@
   }
 
   function init() {
+    var selection = getSelection();
+    if (selection && window.CEAnalytics && typeof window.CEAnalytics.capture === "function") {
+      var pkgLabel = selection.package === "1pack" ? "1 Pack" : "2 Pack";
+      window.CEAnalytics.capture("checkout_viewed", {
+        package: pkgLabel,
+        quantity: selection.qty,
+        page: location.pathname || ""
+      });
+    }
+
     var submitted = getQueryParam("submitted");
     if (submitted === "1" || submitted === "true") {
       if (typeof history.replaceState === "function") {
         history.replaceState({}, document.title, window.location.pathname + window.location.hash);
       }
-      var selection = getSelection();
+      selection = getSelection();
       if (selection) {
         var iframe = document.getElementById("checkout-airtable-form");
         var formBody = document.getElementById("checkout-form-body");
