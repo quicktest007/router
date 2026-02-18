@@ -99,39 +99,48 @@
     if (successEl) successEl.classList.remove("is-visible");
   }
 
-  var AIRTABLE_FORM_BASE = "https://airtable.com/embed/app8UV0RBo7wvJy7G/pagKOCvwDdnEpCyel/form";
+  /** Airtable form embed base URL (no query string). Prefill params added in buildAirtablePrefillUrl(). */
+  var AIRTABLE_FORM_BASE_URL = "https://airtable.com/embed/app8UV0RBo7wvJy7G/pagKOCvwDdnEpCyel/form";
+
+  /** Airtable field names – must match the form exactly. Package options: "1 Pack" | "2 Pack". */
+  var AIRTABLE_PACKAGE_FIELD = "Package";
+  var AIRTABLE_QTY_FIELD = "QTY";
 
   /**
-   * Build Airtable embed URL with prefill + hide params so Package and QTY are submitted but not editable.
-   * Fields must remain in the Airtable form; hide_Package=true and hide_QTY=true hide them in the UI.
-   * Structure: ?prefill_Package=...&prefill_QTY=...&hide_Package=true&hide_QTY=true
+   * Build the Airtable embed URL with prefill params so Package and QTY are submitted invisibly.
+   * prefill_ sets the value; hide_ hides the field in the form so the user only sees Email + Privacy.
+   * @param {Object} selection - { package: "1pack"|"2pack", qty: number }
+   * @returns {string} Full embed URL with ?prefill_Package=...&prefill_QTY=...&hide_Package=true&hide_QTY=true
+   */
+  function buildAirtablePrefillUrl(selection) {
+    if (!selection || (selection.package !== "1pack" && selection.package !== "2pack")) return "";
+
+    var pkgLabel = selection.package === "1pack" ? "1 Pack" : "2 Pack";
+    var qty = Math.min(99, Math.max(1, parseInt(selection.qty, 10) || 1));
+
+    var params = [
+      "prefill_" + AIRTABLE_PACKAGE_FIELD + "=" + encodeURIComponent(pkgLabel),
+      "prefill_" + AIRTABLE_QTY_FIELD + "=" + encodeURIComponent(String(qty)),
+      "hide_" + AIRTABLE_PACKAGE_FIELD + "=true",
+      "hide_" + AIRTABLE_QTY_FIELD + "=true"
+    ];
+    var sep = AIRTABLE_FORM_BASE_URL.indexOf("?") >= 0 ? "&" : "?";
+    return AIRTABLE_FORM_BASE_URL + sep + params.join("&");
+  }
+
+  /**
+   * Set the checkout iframe src to the Airtable form URL with prefill params.
+   * If no selection, iframe src is not set (empty cart is shown instead).
    */
   function setAirtableFormPrefill(selection) {
     var iframe = document.getElementById("checkout-airtable-form");
     if (!iframe) return;
-    if (!selection || (selection.package !== "1pack" && selection.package !== "2pack")) {
+    var url = buildAirtablePrefillUrl(selection);
+    if (url) {
+      iframe.src = url;
+    } else {
       iframe.removeAttribute("src");
-      return;
     }
-    var pkgField = (typeof AIRTABLE_PACKAGE_FIELD !== "undefined" && AIRTABLE_PACKAGE_FIELD) ? AIRTABLE_PACKAGE_FIELD : "Package";
-    var qtyField = (typeof AIRTABLE_QTY_FIELD !== "undefined" && AIRTABLE_QTY_FIELD) ? AIRTABLE_QTY_FIELD : "QTY";
-    var pkgValue = selection.package === "1pack" ? "1 Pack" : "2 Pack";
-    var qtyValue = String(Math.min(99, Math.max(1, parseInt(selection.qty, 10) || 1)));
-
-    function enc(name) {
-      return encodeURIComponent(name).replace(/%20/g, "+");
-    }
-    function encVal(val) {
-      return encodeURIComponent(val).replace(/%20/g, "+");
-    }
-
-    var params = [
-      "prefill_" + enc(pkgField) + "=" + encVal(pkgValue),
-      "prefill_" + enc(qtyField) + "=" + encVal(qtyValue),
-      "hide_" + enc(pkgField) + "=true",
-      "hide_" + enc(qtyField) + "=true"
-    ];
-    iframe.src = AIRTABLE_FORM_BASE + "?" + params.join("&");
   }
 
   function showCheckoutWithSelection(selection) {
