@@ -289,15 +289,11 @@
       clearAddToCartError();
       var s = getPackSelection();
       var packageLabel = getSelectedPackage();
-      var payload = {
-        package: packageLabel,
-        quantity: qty,
-        page: location.pathname || ""
-      };
-      if (window.CEAnalytics && typeof window.CEAnalytics.capture === "function") {
-        window.CEAnalytics.capture("add_to_cart_clicked", payload);
-      }
-      console.log("[PostHog] add_to_cart_clicked", payload);
+      try {
+        if (window.posthog && typeof window.posthog.capture === "function") {
+          window.posthog.capture("add_to_cart_clicked", { package: packageLabel, quantity: qty });
+        }
+      } catch (e) {}
       var savings = getSavings(s.package);
       if (typeof track === "function") track("add_to_cart", { package: s.package, price: s.price, qty: qty, savings: savings });
       try {

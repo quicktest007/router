@@ -199,11 +199,26 @@
     modal.setAttribute("aria-hidden", "false");
   }
 
+  /** Only fire checkout_submitted + identify once per page. */
+  var checkoutSubmittedTracked = false;
+
   /**
    * Notify that the form was submitted (from redirect param or postMessage).
    * Other scripts can listen: document.addEventListener("checkoutFormSubmitted", function (e) { ... });
    */
   function onFormSubmitted() {
+    if (!checkoutSubmittedTracked) {
+      checkoutSubmittedTracked = true;
+      try {
+        if (window.posthog && typeof window.posthog.capture === "function") {
+          window.posthog.capture("checkout_submitted");
+        }
+        var email = getQueryParam("email");
+        if (email && window.posthog && typeof window.posthog.identify === "function") {
+          window.posthog.identify(email);
+        }
+      } catch (e) {}
+    }
     try {
       document.dispatchEvent(new CustomEvent("checkoutFormSubmitted"));
     } catch (err) {}
@@ -232,13 +247,12 @@
 
   function init() {
     var selection = getSelection();
-    if (selection && window.CEAnalytics && typeof window.CEAnalytics.capture === "function") {
-      var pkgLabel = selection.package === "1pack" ? "1 Pack" : "2 Pack";
-      window.CEAnalytics.capture("checkout_viewed", {
-        package: pkgLabel,
-        quantity: selection.qty,
-        page: location.pathname || ""
-      });
+    if (selection) {
+      try {
+        if (window.posthog && typeof window.posthog.capture === "function") {
+          window.posthog.capture("checkout_viewed");
+        }
+      } catch (e) {}
     }
 
     var submitted = getQueryParam("submitted");
