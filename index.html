@@ -160,8 +160,31 @@
     </div>
   </footer>
 
+  <div id="cookie-banner" class="cookie-banner" role="dialog" aria-label="Cookie consent" aria-live="polite">
+    <p class="cookie-banner__text">We use cookies to enhance your experience, analyze site usage, and personalize content. By continuing to use our website, you consent to our <a href="./privacy.html" class="cookie-banner__link">cookie policy</a>.</p>
+    <button type="button" class="cookie-banner__btn" id="cookie-banner-accept">Accept</button>
+  </div>
+
   <script src="./assets/config.js"></script>
   <script src="./assets/app.js"></script>
   <script src="./assets/index.js"></script>
+  <script>
+    (function() {
+      var KEY = "cookie_consent_accepted";
+      var banner = document.getElementById("cookie-banner");
+      var btn = document.getElementById("cookie-banner-accept");
+      if (!banner || !btn) return;
+      try {
+        if (localStorage.getItem(KEY) === "1") {
+          banner.classList.add("is-hidden");
+          return;
+        }
+      } catch (e) {}
+      btn.addEventListener("click", function() {
+        try { localStorage.setItem(KEY, "1"); } catch (e) {}
+        banner.classList.add("is-hidden");
+      });
+    })();
+  </script>
 </body>
 </html>
