@@ -107,12 +107,10 @@
   var AIRTABLE_QTY_FIELD = "QTY";
 
   /**
-   * Build the Airtable embed URL with prefill params so Package and QTY are submitted with the form.
-   * hide_ was removed because hidden prefilled fields often do not submit in embeds; with prefill_ only,
-   * Package and QTY will show in the form (prefilled) and will be saved. In Airtable, ensure the
-   * "Package" field is Single select with options exactly "1 Pack" and "2 Pack".
+   * Build the Airtable embed URL with prefill + hide params so Package and QTY are submitted but not shown.
+   * prefill_ sets the value; hide_ hides the field in the form so the user only sees Email and Privacy.
    * @param {Object} selection - { package: "1pack"|"2pack", qty: number }
-   * @returns {string} Full embed URL with ?prefill_Package=...&prefill_QTY=...
+   * @returns {string} Full embed URL with prefill_ and hide_ params
    */
   function buildAirtablePrefillUrl(selection) {
     if (!selection || (selection.package !== "1pack" && selection.package !== "2pack")) return "";
@@ -123,6 +121,8 @@
     var params = [
       "prefill_" + AIRTABLE_PACKAGE_FIELD + "=" + encodeURIComponent(pkgLabel),
       "prefill_" + AIRTABLE_QTY_FIELD + "=" + encodeURIComponent(String(qty)),
+      "hide_" + AIRTABLE_PACKAGE_FIELD + "=true",
+      "hide_" + AIRTABLE_QTY_FIELD + "=true",
       "_=" + String(Date.now())
     ];
     var sep = AIRTABLE_FORM_BASE_URL.indexOf("?") >= 0 ? "&" : "?";
